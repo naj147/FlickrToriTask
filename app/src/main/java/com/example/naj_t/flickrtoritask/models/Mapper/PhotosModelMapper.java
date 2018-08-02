@@ -1,7 +1,7 @@
-package com.example.naj_t.flickrtoritask.model.Mapper;
+package com.example.naj_t.flickrtoritask.models.Mapper;
 
 import com.example.domainlayer.model.Photos;
-import com.example.naj_t.flickrtoritask.model.PhotosModel;
+import com.example.naj_t.flickrtoritask.models.PhotosModel;
 
 public class PhotosModelMapper {
 

@@ -10,7 +10,7 @@ import java.util.Locale;
 import io.reactivex.Observable;
 import io.realm.Realm;
 
-public class PhotosCachesImpl implements PhotosCache {
+public class PhotosCacheImpl implements PhotosCache {
     private static final long EXP_TIME = 8 * 10 * 1000; //8m
     @Override
     public boolean isExpired() {

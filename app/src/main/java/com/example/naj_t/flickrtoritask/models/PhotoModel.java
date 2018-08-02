@@ -1,4 +1,4 @@
-package com.example.naj_t.flickrtoritask.model;
+package com.example.naj_t.flickrtoritask.models;
 
 public class PhotoModel {
 

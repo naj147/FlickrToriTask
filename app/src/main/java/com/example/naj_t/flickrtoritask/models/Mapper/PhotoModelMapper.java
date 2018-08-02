@@ -1,7 +1,7 @@
-package com.example.naj_t.flickrtoritask.model.Mapper;
+package com.example.naj_t.flickrtoritask.models.Mapper;
 
 import com.example.domainlayer.model.Photo;
-import com.example.naj_t.flickrtoritask.model.PhotoModel;
+import com.example.naj_t.flickrtoritask.models.PhotoModel;
 
 import java.util.ArrayList;
 import java.util.List;

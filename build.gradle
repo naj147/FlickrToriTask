@@ -17,6 +17,11 @@ buildscript {
 }
 
 allprojects {
+    afterEvaluate {
+        tasks.withType(JavaCompile.class) {
+            options.compilerArgs << "-Xmaxerrs" << "500"
+        }
+    }
     repositories {
         google()
         jcenter()

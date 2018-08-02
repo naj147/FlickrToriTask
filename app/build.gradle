@@ -36,4 +36,5 @@ dependencies {
     implementation  developmentDependencies.Timber
     implementation developmentDependencies.leakCanary
     implementation project(path: ':domainlayer')
+    implementation project(path: ':datalayer')
 }
