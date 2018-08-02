@@ -2,14 +2,20 @@ package com.example.datalayer.repository.datasource;
 
 import com.example.datalayer.cache.PhotosCache;
 import com.example.datalayer.net.API;
+import com.example.datalayer.net.FlickrServiceGenerator;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class PhotosDataStoreFactory {
     private final PhotosCache photosCache;
-    private final API api;
+    private final FlickrServiceGenerator flickrServiceGenerator;
 
-    public PhotosDataStoreFactory(PhotosCache photosCache, API api) {
+    @Inject
+    public PhotosDataStoreFactory(PhotosCache photosCache, FlickrServiceGenerator flickrServiceGenerator) {
         this.photosCache = photosCache;
-        this.api = api;
+        this.flickrServiceGenerator = flickrServiceGenerator;
     }
 
 
@@ -17,7 +23,7 @@ public class PhotosDataStoreFactory {
         if(!photosCache.isExpired() && photosCache.isCached()){
             return new PhotosLocalDataStore(photosCache);
         }else{
-            return new PhotosCloudDataStore(api,photosCache);
+            return new PhotosCloudDataStore(flickrServiceGenerator.getAPI(),photosCache);
         }
     }
 }
