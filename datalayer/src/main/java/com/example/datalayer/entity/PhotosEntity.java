@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -60,6 +61,7 @@ public class PhotosEntity extends RealmObject {
     }
 
     public PhotosEntity() {
+        this.lastUpdated = new Date(System.currentTimeMillis()).toString();
     }
 
     public PhotosEntity(String id, int page, int pages, int total, RealmList<PhotoEntity> photo) {
@@ -68,6 +70,7 @@ public class PhotosEntity extends RealmObject {
         this.pages = pages;
         this.total = total;
         this.photo = photo;
+        this.lastUpdated = new Date(System.currentTimeMillis()).toString();
     }
 
     public String getId() {

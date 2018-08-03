@@ -6,10 +6,11 @@ import com.example.naj_t.flickrtoritask.models.PhotoModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoModelMapper {
+import javax.inject.Inject;
 
-    public PhotoModelMapper() {
-    }
+public class PhotoModelMapper {
+    @Inject
+    public PhotoModelMapper() { }
 
     public PhotoModel transform(Photo photoEntity){
         PhotoModel photo = null;

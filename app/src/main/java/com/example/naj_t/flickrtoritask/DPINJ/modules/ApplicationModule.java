@@ -1,4 +1,4 @@
-package com.example.naj_t.flickrtoritask.modules;
+package com.example.naj_t.flickrtoritask.DPINJ.modules;
 
 import android.content.Context;
 

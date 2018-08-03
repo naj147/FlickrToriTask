@@ -3,8 +3,10 @@ package com.example.naj_t.flickrtoritask.models.Mapper;
 import com.example.domainlayer.model.Photos;
 import com.example.naj_t.flickrtoritask.models.PhotosModel;
 
-public class PhotosModelMapper {
+import javax.inject.Inject;
 
+public class PhotosModelMapper {
+    @Inject
     public PhotosModelMapper() {
     }
 

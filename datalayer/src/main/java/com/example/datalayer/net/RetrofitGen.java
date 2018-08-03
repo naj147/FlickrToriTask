@@ -11,7 +11,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 @Singleton
 public class RetrofitGen {
-    private static  String BASE_URL= "https://api.flickr.com/services/rest/";
+    private static  String BASE_URL= "https://api.flickr.com/";
     private final Http3Gen http3Gen;
     private static Retrofit retrofit;
 @Inject

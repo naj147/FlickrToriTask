@@ -1,13 +1,11 @@
 package com.example.naj_t.flickrtoritask;
 
-import android.app.Activity;
 import android.app.Application;
 
 
-import com.example.naj_t.flickrtoritask.components.ApplicationComponent;
-import com.example.naj_t.flickrtoritask.components.DaggerApplicationComponent;
-import com.example.naj_t.flickrtoritask.modules.ApplicationModule;
-import com.squareup.leakcanary.LeakCanary;
+import com.example.naj_t.flickrtoritask.DPINJ.components.ApplicationComponent;
+import com.example.naj_t.flickrtoritask.DPINJ.components.DaggerApplicationComponent;
+import com.example.naj_t.flickrtoritask.DPINJ.modules.ApplicationModule;
 
 import timber.log.Timber;
 
@@ -20,5 +18,9 @@ public class AndroidApplication extends Application{
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+
+    }
+    public ApplicationComponent getApplicationComponent() {
+        return this.applicationComponent;
     }
 }

@@ -14,7 +14,9 @@ ext {
   javaxAnnotationVersion = '1.0'
   javaxInjectVersion = '1'
   rxAndroidVersion = '2.0.2'
-  
+  butterknifeVersion = '8.8.1'
+  butterknifeCompilerVersion ='8.8.1'
+  recyclerViewVersion = '27.1.1'
   //Testing
   jUnitVersion = '4.12'
   espressoVersion = '2.0'
@@ -30,6 +32,10 @@ ext {
       rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
 	  javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
 	  rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+	  butterKnife:		  "com.jakewharton:butterknife:${butterknifeVersion}",
+	  butterKnifeCompiler:		  "com.jakewharton:butterknife-compiler:${butterknifeCompilerVersion}",
+	  recyclerView:       "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+	 
 	  
   ]
 

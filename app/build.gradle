@@ -30,11 +30,15 @@ dependencies {
     androidTestImplementation presentationTestDependencies.espresso
     implementation  presentationDependencies.dagger
     annotationProcessor  presentationDependencies.daggerCompiler
+    implementation presentationDependencies.butterKnife
+    annotationProcessor presentationDependencies.butterKnifeCompiler
     implementation  presentationDependencies.rxJava
     implementation  presentationDependencies.javaxAnnotation
     implementation  presentationDependencies.rxAndroid
     implementation  developmentDependencies.Timber
     implementation developmentDependencies.leakCanary
+    implementation presentationDependencies.recyclerView
+    implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation project(path: ':domainlayer')
     implementation project(path: ':datalayer')
 }
