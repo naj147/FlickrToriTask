@@ -7,10 +7,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import io.realm.Realm;
-
+@Singleton
 public class PhotosCacheImpl implements PhotosCache {
+    @Inject
+    public PhotosCacheImpl() {
+    }
+
     private static final long EXP_TIME = 8 * 10 * 1000; //8m
     @Override
     public boolean isExpired() {

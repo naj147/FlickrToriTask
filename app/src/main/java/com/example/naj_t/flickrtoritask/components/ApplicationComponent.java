@@ -2,6 +2,7 @@ package com.example.naj_t.flickrtoritask.components;
 
 import android.content.Context;
 
+import com.example.datalayer.cache.PhotosCache;
 import com.example.domainlayer.executor.PostExecutionThread;
 import com.example.domainlayer.executor.ThreadExecutor;
 import com.example.domainlayer.repository.PhotosRepository;

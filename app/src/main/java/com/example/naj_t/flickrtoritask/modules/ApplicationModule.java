@@ -46,9 +46,17 @@ public class ApplicationModule {
     Http3Cache provideHttp3Cache(Http3CacheImpl http3Cache) {
         return http3Cache;
     }
+    @Provides @Singleton
+    Http3CacheImpl provideHttp3CacheImpl(Context context){
+        return  new Http3CacheImpl(context);
+    }
 
     @Provides @Singleton
-    PhotosRepository provideUserRepository(PhotosDataRepository photosDataRepository) {
+    PhotosRepository providePhotosDataRepository(PhotosDataRepository photosDataRepository) {
         return photosDataRepository;
+    }
+    @Provides @Singleton
+    PhotosCache photosCache(PhotosCacheImpl photosCache){
+        return photosCache;
     }
 }
