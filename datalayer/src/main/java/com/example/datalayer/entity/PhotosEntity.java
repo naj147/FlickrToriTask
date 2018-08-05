@@ -88,4 +88,9 @@ public class PhotosEntity extends RealmObject {
     public void setPhoto(RealmList<PhotoEntity> photo) {
         this.photo = photo;
     }
+
+    @Override
+    public String toString() {
+        return "ID :" + this.getId()+ "\n Page :" + this.getPage()+ "\n Pages :" + this.getPages() +"\n";
+    }
 }

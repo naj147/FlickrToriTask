@@ -1,11 +1,14 @@
 package com.example.datalayer.repository.datasource;
 
+import android.util.Log;
+
 import com.example.datalayer.cache.PhotosCache;
 import com.example.datalayer.entity.PhotosEntity;
 import com.example.datalayer.net.API;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
+import timber.log.Timber;
 
 public class PhotosCloudDataStore implements  PhotosDataStore {
     private final API apiService;

@@ -24,7 +24,7 @@ public class RetrofitGen {
             return retrofit;
         }
         retrofit= new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setExclusionStrategies(new AnnotationExclusionStrategy()).create()))
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(new itemTypeAdapterFactory()).setExclusionStrategies(new AnnotationExclusionStrategy()).create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(http3Gen.okHttpClient())
                 .baseUrl(BASE_URL)

@@ -102,10 +102,10 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     @Override
     public void renderPhotosList(PhotosModel photosModel) {
         if(photosModel!=null){
-            Toast.makeText(this,photosModel.getPage() + " " + photosModel.getPages(),Toast.LENGTH_LONG).show();
-//            this.textViewPage.setText(photosModel.getPage());
- //           this.textViewPages.setText(photosModel.getPages());
-   //         this.textViewTotal.setText(photosModel.getTotal());
+//            Toast.makeText(this,photosModel.getPage() + " " + photosModel.getPages(),Toast.LENGTH_LONG).show();
+            this.textViewPage.setText("page : "+photosModel.getPage());
+            this.textViewPages.setText("Pages : "+photosModel.getPages());
+            this.textViewTotal.setText("Total :" +photosModel.getTotal());
             this.photosAdapter.setPhotosCollection(photosModel.getPhoto());
         }
     }

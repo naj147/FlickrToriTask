@@ -11,6 +11,8 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
+import timber.log.Timber;
+
 @Singleton
 public class PhotosDataRepository implements PhotosRepository {
 private final PhotosDataStoreFactory photosDataStoreFactory;
@@ -28,6 +30,8 @@ private  final PhotosMapper photosMapper;
         return photosDataStoreFactory.create().photos().map(new Function<PhotosEntity, Photos>() {
             @Override
             public Photos apply(PhotosEntity photosEntity) throws Exception {
+                Timber.tag("HEY").d("I was in PhotosDataRepo");
+                Timber.tag("HEY").d("Fatzo "+ photosEntity.toString());
                 return photosMapper.transform(photosEntity);
             }
         });

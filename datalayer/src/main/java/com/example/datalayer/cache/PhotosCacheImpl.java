@@ -19,7 +19,7 @@ public class PhotosCacheImpl implements PhotosCache {
     public PhotosCacheImpl() {
     }
 
-    private static final long EXP_TIME = 8 * 10 * 1000; //8m
+    private static final long EXP_TIME =  10 * 1000; //8m
 
 //    private String modifyDateLayout(String inputDate) throws ParseException{
 //        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z",Locale.ENGLISH).parse(inputDate);
@@ -48,7 +48,7 @@ public class PhotosCacheImpl implements PhotosCache {
                     realm.beginTransaction();
                     realm.delete(PhotosEntity.class);
                     realm.commitTransaction();
-                    return true;
+                    return false;
                 }
 
             } catch (Exception e) {
@@ -73,6 +73,7 @@ public class PhotosCacheImpl implements PhotosCache {
 
     @Override
     public void put(PhotosEntity photosEntity) {
+
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(photosEntity);
