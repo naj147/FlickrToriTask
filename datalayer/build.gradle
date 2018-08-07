@@ -30,8 +30,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     testImplementation dataTestDependencies.junit
-    androidTestImplementation dataTestDependencies.runner
-    androidTestImplementation dataTestDependencies.espresso
+    testImplementation dataTestDependencies.assertj
+    testImplementation dataTestDependencies.mockito
+    testImplementation dataTestDependencies.robolectric
+
     implementation dataDependencies.okHttp
     implementation dataDependencies.okHttpLoggingInterceptor
     implementation dataDependencies.retrofit
@@ -40,9 +42,11 @@ dependencies {
     implementation dataDependencies.rxJava
     implementation dataDependencies.gson
     implementation dataDependencies.dagger
+
     annotationProcessor dataDependencies.daggerCompiler
 
     implementation  developmentDependencies.Timber
 
     implementation project(path: ':domainlayer')
+    androidTestImplementation 'junit:junit:4.12'
 }

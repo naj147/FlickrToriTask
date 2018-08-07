@@ -16,13 +16,13 @@ public abstract class UseCase<T,Params> {
     private final PostExecutionThread postExecutionThread;
     private final CompositeDisposable disposables;
 
-    UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         this.threadExecutor = threadExecutor;
         this.postExecutionThread = postExecutionThread;
         this.disposables = new CompositeDisposable();
     }
 
-    abstract Observable<T> buildUseCaseObservable(Params params);
+    public abstract Observable<T> buildUseCaseObservable(Params params);
 
 
     public void execute(DisposableObserver<T> observer, Params params) {
@@ -48,7 +48,6 @@ public abstract class UseCase<T,Params> {
      * Dispose from current {@link CompositeDisposable}.
      */
     private void addDisposable(Disposable disposable) {
-        //Todo : Check disposable and disposables are not null
         disposables.add(disposable);
     }
 }

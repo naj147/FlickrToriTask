@@ -21,7 +21,9 @@ ext {
   jUnitVersion = '4.12'
   espressoVersion = '2.0'
   runnerVersion = '1.0.2'
-  
+  mockitoVersion  = '2.21.0'
+  robolectricVersion ='3.8' 
+  assertJVersion = '3.10.0'
   //Development
   leakCanaryVersion = '1.6.1'
   timberVersion = '4.7.1'
@@ -42,6 +44,8 @@ ext {
   presentationTestDependencies = [
       junit:              "junit:junit:${jUnitVersion}",
 	  espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+	  assertj:            "org.assertj:assertj-core:${assertJVersion}",
+	  mockito:		      "org.mockito:mockito-core:${mockitoVersion}",
 	  runner:			  "com.android.support.test:runner:${runnerVersion}"
   ]
 
@@ -52,7 +56,9 @@ ext {
   ]
 
   domainTestDependencies = [
-      junit:              "junit:junit:${jUnitVersion}"
+      junit:              "junit:junit:${jUnitVersion}",
+	  mockito:		      "org.mockito:mockito-core:${mockitoVersion}",
+	  assertj:            "org.assertj:assertj-core:${assertJVersion}"
   ]
 
   dataDependencies = [
@@ -69,8 +75,10 @@ ext {
 
   dataTestDependencies = [
       junit:              "junit:junit:${jUnitVersion}",
-	  espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-	  runner:			  "com.android.support.test:runner:${runnerVersion}"
+	  runner:			  "com.android.support.test:runner:${runnerVersion}",
+	  assertj:            "org.assertj:assertj-core:${assertJVersion}",
+	  mockito:		      "org.mockito:mockito-core:${mockitoVersion}",
+	  robolectric:        "org.robolectric:robolectric:${robolectricVersion}"
   ]
 
   developmentDependencies = [

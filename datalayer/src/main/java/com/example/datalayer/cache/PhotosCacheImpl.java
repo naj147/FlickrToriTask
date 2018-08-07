@@ -2,6 +2,7 @@ package com.example.datalayer.cache;
 
 import com.example.datalayer.entity.PhotosEntity;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +20,7 @@ public class PhotosCacheImpl implements PhotosCache {
     public PhotosCacheImpl() {
     }
 
-    private static final long EXP_TIME =  10 * 1000; //8m
+    private static final long EXP_TIME =  10 * 1000; //1m
 
 //    private String modifyDateLayout(String inputDate) throws ParseException{
 //        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z",Locale.ENGLISH).parse(inputDate);
@@ -29,14 +30,14 @@ public class PhotosCacheImpl implements PhotosCache {
     public boolean isExpired() {
         Realm realm = Realm.getDefaultInstance();
         if (realm.where(PhotosEntity.class).count() != 0) {
-            Date currentTime = new Date(System.currentTimeMillis());
+            Long currentTime = System.currentTimeMillis();
             //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
-            Date lastUpdated;
+            Long lastUpdated;
             try {
                 PhotosEntity photosEntity = realm.where(PhotosEntity.class).findFirst();
                 if(photosEntity!=null){
-                    lastUpdated = new Date(photosEntity.getLastUpdated());
-                    boolean isExpired = currentTime.getTime() - lastUpdated.getTime() > EXP_TIME;
+                    lastUpdated = Long.parseLong(photosEntity.getLastUpdated());
+                    boolean isExpired = currentTime - lastUpdated > EXP_TIME;
                     if (isExpired) {
                         realm.beginTransaction();
                         realm.delete(PhotosEntity.class);
@@ -73,13 +74,11 @@ public class PhotosCacheImpl implements PhotosCache {
 
     @Override
     public void put(PhotosEntity photosEntity) {
-
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(photosEntity);
         realm.commitTransaction();
         realm.close();
-
     }/*
 try {
      instance = Realm.getDefaultInstance();

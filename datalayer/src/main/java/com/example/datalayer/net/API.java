@@ -11,8 +11,13 @@ import retrofit2.http.Query;
 
 public interface API {
 
+    //GET RECENT SERVICE
+
     @GET("/services/rest/")
     Observable<PhotosEntity> listImages(@Query(("method")) String method, @Query(("api_key")) String api_key, @Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
+
+   //TODO : Add the search Service
+
     /*
     * public interface RecipeService {
     @GET("{recipeId}")

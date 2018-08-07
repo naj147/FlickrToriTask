@@ -30,8 +30,8 @@ private  final PhotosMapper photosMapper;
         return photosDataStoreFactory.create().photos().map(new Function<PhotosEntity, Photos>() {
             @Override
             public Photos apply(PhotosEntity photosEntity) throws Exception {
-                Timber.tag("HEY").d("I was in PhotosDataRepo");
-                Timber.tag("HEY").d("Fatzo "+ photosEntity.toString());
+//                Timber.tag("HEY").d("I was in PhotosDataRepo");
+//                Timber.tag("HEY").d("Fatzo "+ photosEntity.toString());
                 return photosMapper.transform(photosEntity);
             }
         });

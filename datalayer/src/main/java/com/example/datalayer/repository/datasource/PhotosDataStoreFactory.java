@@ -12,6 +12,7 @@ public class PhotosDataStoreFactory {
     private final PhotosCache photosCache;
     private final FlickrServiceGenerator flickrServiceGenerator;
 
+
     @Inject
     public PhotosDataStoreFactory(PhotosCache photosCache, FlickrServiceGenerator flickrServiceGenerator) {
         this.photosCache = photosCache;
