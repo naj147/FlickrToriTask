@@ -7,12 +7,15 @@ import com.example.datalayer.cache.Http3CacheImpl;
 import com.example.datalayer.cache.PhotosCache;
 import com.example.datalayer.cache.PhotosCacheImpl;
 import com.example.datalayer.executor.JobExecutor;
+import com.example.datalayer.net.Http3Gen;
 import com.example.datalayer.repository.PhotosDataRepository;
 import com.example.domainlayer.executor.PostExecutionThread;
 import com.example.domainlayer.executor.ThreadExecutor;
 import com.example.domainlayer.repository.PhotosRepository;
 import com.example.naj_t.flickrtoritask.AndroidApplication;
 import com.example.naj_t.flickrtoritask.UIThread;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Singleton;
 
@@ -58,5 +61,10 @@ public class ApplicationModule {
     @Provides @Singleton
     PhotosCache photosCache(PhotosCacheImpl photosCache){
         return photosCache;
+    }
+
+    @Provides @Singleton
+    Picasso picasso(Context context, Http3Gen http3Gen){
+        return new Picasso.Builder(context).downloader(new OkHttp3Downloader(http3Gen.okHttpClient())).build();
     }
 }

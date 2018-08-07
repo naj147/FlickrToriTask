@@ -6,5 +6,5 @@ import io.reactivex.Observable;
 
 
 public interface PhotosRepository {
-    Observable<Photos> photos();
+    Observable<Photos> photos(int method,String title, String tags);
 }

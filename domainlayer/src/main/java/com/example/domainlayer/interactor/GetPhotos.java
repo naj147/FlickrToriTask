@@ -9,18 +9,20 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-public class GetPhotos extends UseCase<Photos,Void> {
+public class GetPhotos extends UseCase<Photos,ApiParam> {
     private final PhotosRepository photosRepository;
 
     @Inject
-    GetPhotos(PhotosRepository photosRepository, ThreadExecutor threadExecutor,
-              PostExecutionThread postExecutionThread) {
+    public GetPhotos(PhotosRepository photosRepository, ThreadExecutor threadExecutor,
+                     PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.photosRepository = photosRepository;
     }
 
+
+
     @Override
-    Observable<Photos> buildUseCaseObservable(Void Unused) {
-        return this.photosRepository.photos();
+    public Observable<Photos> buildUseCaseObservable(ApiParam apiParam) {
+        return this.photosRepository.photos(apiParam.getMethod(),apiParam.getTags(),apiParam.getTitle());
     }
 }

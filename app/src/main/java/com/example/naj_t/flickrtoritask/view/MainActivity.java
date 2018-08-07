@@ -50,18 +50,22 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         setContentView(R.layout.activity_main);
         this.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
-        Realm.init(this);
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-                        .build());
+        initializingRealm(this);
         this.photosPresenter.setView(this);
         if (savedInstanceState == null) {
             this.loadPhotos();
         }
         setupRecyclerView();
 
+    }
+
+    public void initializingRealm(Context context){
+        Realm.init(context);
+//        Stetho.initialize(
+//                Stetho.newInitializerBuilder(context)
+//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(context))
+//                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))
+//                        .build());
     }
 
     private void loadPhotos() {
@@ -91,7 +95,9 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
 
 
     private void setupRecyclerView() {
-        this.recyclerView.setLayoutManager( new PhotosLayoutManager(context()));
+        this.recyclerView.setHasFixedSize(true);
+        this.recyclerView.setLayoutManager( new PhotosLayoutManager(2));
+
         this.recyclerView.setAdapter(photosAdapter);
     }
 

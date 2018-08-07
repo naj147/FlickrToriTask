@@ -13,7 +13,7 @@ import io.realm.RealmList;
 @Singleton
 public class PhotoMapper {
     @Inject
-    PhotoMapper() {
+    public PhotoMapper() {
     }
 
     public Photo transform(PhotoEntity photoEntity){

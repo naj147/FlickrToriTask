@@ -21,11 +21,6 @@ public class PhotoModelMapper {
         }
         return  photo;
     }
-
-
-
-
-
     public List<PhotoModel> transformList(List<Photo> photoEntities){
         List<PhotoModel> photoList = new ArrayList<>();
         for(Photo photoEntity : photoEntities){

@@ -18,6 +18,9 @@ public interface API {
 
    //TODO : Add the search Service
 
+
+    @GET("/services/rest/")
+    Observable<PhotosEntity> searchForImages(@Query(("method")) String method, @Query(("api_key")) String api_key,@Query("tags") String tags, @Query("text") String text,@Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
     /*
     * public interface RecipeService {
     @GET("{recipeId}")

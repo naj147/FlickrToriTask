@@ -13,6 +13,9 @@ import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Observable;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -30,14 +33,15 @@ public class PhotosDataRepositoryTest {
         MockitoAnnotations.initMocks(this);
         photosDataRepository = new PhotosDataRepository(photosDataStoreFactory,photosMapper);
         given(photosDataStoreFactory.create()).willReturn(photosDataStore);
+
     }
     @Test
     public void getPhotosTest(){
         PhotosEntity photosEntity = new PhotosEntity();
-        given(photosDataStore.photos()).willReturn(Observable.just(photosEntity));
-        photosDataRepository.photos();
+        given(photosDataStore.photos(0,null,null)).willReturn(Observable.just(photosEntity));
+        photosDataRepository.photos(0,null,null);
         verify(photosDataStoreFactory).create();
-        verify(photosDataStore).photos();
+        verify(photosDataStore).photos(0,null,null);
     }
 
 

@@ -8,6 +8,7 @@ import com.example.domainlayer.executor.ThreadExecutor;
 import com.example.domainlayer.repository.PhotosRepository;
 import com.example.naj_t.flickrtoritask.view.MainActivity;
 import com.example.naj_t.flickrtoritask.DPINJ.modules.ApplicationModule;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Singleton;
 
@@ -22,4 +23,5 @@ public interface ApplicationComponent {
     PostExecutionThread postExecutionThread();
     PhotosRepository photosRepository();
     PhotosCache photoCache();
+    Picasso picasso();
 }

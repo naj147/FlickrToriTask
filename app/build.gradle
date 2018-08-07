@@ -41,7 +41,9 @@ dependencies {
     implementation  developmentDependencies.Timber
     implementation developmentDependencies.leakCanary
     implementation presentationDependencies.recyclerView
-    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation presentationDependencies.cardView
+    implementation presentationDependencies.stetho
+    implementation presentationDependencies.picasso
     implementation project(path: ':domainlayer')
     implementation project(path: ':datalayer')
 }

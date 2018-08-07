@@ -28,6 +28,10 @@ public class Photo {
 
     }
 
+    public Photo(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

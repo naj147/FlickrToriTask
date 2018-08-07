@@ -2,6 +2,7 @@ package com.example.naj_t.flickrtoritask.presenters;
 
 import com.example.domainlayer.exception.DefaultErrorBundle;
 import com.example.domainlayer.exception.ErrorBundle;
+import com.example.domainlayer.interactor.ApiParam;
 import com.example.domainlayer.interactor.DefaultObserver;
 import com.example.domainlayer.interactor.GetPhotos;
 import com.example.domainlayer.model.Photos;
@@ -63,7 +64,8 @@ public class PhotosPresenter implements Presenter {
     }
 
     private void getPhotos() {
-        this.getPhotosUseCase.execute(new PhotosObserver(), null);
+        ApiParam apiParam = new ApiParam();
+        this.getPhotosUseCase.execute(new PhotosObserver(),apiParam );
     }
 
     @Override

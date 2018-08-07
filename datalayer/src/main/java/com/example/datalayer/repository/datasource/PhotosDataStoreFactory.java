@@ -1,7 +1,6 @@
 package com.example.datalayer.repository.datasource;
 
 import com.example.datalayer.cache.PhotosCache;
-import com.example.datalayer.net.API;
 import com.example.datalayer.net.FlickrServiceGenerator;
 
 import javax.inject.Inject;
