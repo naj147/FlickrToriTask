@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.naj_t.flickrtoritask.R;
 import com.example.naj_t.flickrtoritask.models.PhotoModel;
+import com.example.naj_t.flickrtoritask.view.MainActivity;
+import com.squareup.haha.perflib.Main;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
@@ -30,6 +32,7 @@ public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosVie
     Picasso picasso;
     private List<PhotoModel> photosCollection;
     private final LayoutInflater layoutInflater;
+    private  Context context;
 
 @Inject
     PhotosAdapter(Context context) {
@@ -44,16 +47,23 @@ public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosVie
     @NonNull
     @Override
     public PhotosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        this.context = parent.getContext();
         final View view = this.layoutInflater.inflate(R.layout.row_card, parent, false);//Create a fragment
         return new PhotosViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PhotosViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PhotosViewHolder holder, final int position) {
         PhotoModel photoModel = this.photosCollection.get(position);
-        holder.textViewTitle.setText(photoModel.getTitle());
+//        holder.textViewTitle.setText(photoModel.getParam1());
         String url = "https://farm"+photoModel.getFarm()+".staticflickr.com/"+photoModel.getServer()+"/"+photoModel.getId()+"_"+photoModel.getSecret()+".jpg";
         picasso.load(url).into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) context).setPhotoClicked(photosCollection.get(position));
+            }
+        });
 //        holder.textViewId.setText(photoModel.getId());
 //        holder.textViewServer.setText(photoModel.getServer());
 //        holder.textViewOwner.setText(photoModel.getOwner());
@@ -75,12 +85,12 @@ public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosVie
 
     }
     static class PhotosViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title)
-        TextView textViewTitle;
+//        @BindView(R.id.title)
+//        TextView textViewTitle;
         @BindView(R.id.image)
         ImageView imageView;
-        @BindView(R.id.titleFrame)
-        FrameLayout frameLayout;
+//        @BindView(R.id.titleFrame)
+//        FrameLayout frameLayout;
 //        @BindView(R.id.id)
 //        TextView textViewId;
 //        @BindView(R.id.server)
@@ -90,23 +100,23 @@ public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosVie
         PhotosViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(frameLayout.getVisibility()==View.GONE){
-                        frameLayout.setVisibility(View.VISIBLE);
-                        frameLayout.animate()
-                                .alpha(1f)
-                                .setDuration(300);
-                    }else{
-
-                        frameLayout.animate()
-                                .alpha(0f)
-                                .setDuration(300);
-                        frameLayout.setVisibility(View.GONE);
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(frameLayout.getVisibility()==View.GONE){
+//                        frameLayout.setVisibility(View.VISIBLE);
+//                        frameLayout.animate()
+//                                .alpha(1f)
+//                                .setDuration(300);
+//                    }else{
+//
+//                        frameLayout.animate()
+//                                .alpha(0f)
+//                                .setDuration(300);
+//                        frameLayout.setVisibility(View.GONE);
+//                    }
+//                }
+//            });
         }
     }
 }

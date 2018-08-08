@@ -13,6 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class PhotosModelMapperTest {
+
     private static final String FAKE_ID = "123";
     private static final String FAKE_OWNER="@48567231";
     private static final int FAKE_PG_NBR=13;

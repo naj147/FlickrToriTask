@@ -3,7 +3,7 @@ package com.example.domainelayer.interactor;
 import com.example.domainlayer.executor.PostExecutionThread;
 import com.example.domainlayer.executor.ThreadExecutor;
 import com.example.domainlayer.interactor.ApiParam;
-import com.example.domainlayer.interactor.GetPhotos;
+import com.example.domainlayer.interactor.GetUser;
 import com.example.domainlayer.repository.PhotosRepository;
 
 import org.junit.Before;
@@ -16,10 +16,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
-public class GetPhotosTest {
+public class GetUserTest {
 
-    private GetPhotos getPhotos;
-
+    GetUser getUser;
     @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private PhotosRepository mockPhotosRepository;
@@ -27,14 +26,14 @@ public class GetPhotosTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        getPhotos = new GetPhotos(mockPhotosRepository,mockThreadExecutor,mockPostExecutionThread);
+        getUser =new GetUser(mockPhotosRepository,mockThreadExecutor,mockPostExecutionThread);
     }
 
     @Test
-    public  void getPhotosBuildUseCaseObservableTest(){
+    public void getUserBuildUserCaseObservableTest(){
         ApiParam apiParam = mock(ApiParam.class);
-        getPhotos.buildUseCaseObservable(apiParam);
-        verify(mockPhotosRepository).photos(apiParam.getMethod(),apiParam.getParam2(),apiParam.getParam1());
+        getUser.buildUseCaseObservable(apiParam);
+        verify(mockPhotosRepository).userDetails(apiParam.getMethod(),apiParam.getParam1());
         verifyNoMoreInteractions(mockPhotosRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);

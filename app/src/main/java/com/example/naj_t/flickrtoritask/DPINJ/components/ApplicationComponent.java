@@ -8,6 +8,7 @@ import com.example.domainlayer.executor.ThreadExecutor;
 import com.example.domainlayer.repository.PhotosRepository;
 import com.example.naj_t.flickrtoritask.view.MainActivity;
 import com.example.naj_t.flickrtoritask.DPINJ.modules.ApplicationModule;
+import com.example.naj_t.flickrtoritask.view.PhotoDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Singleton;
@@ -18,6 +19,7 @@ import dagger.Component;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
     void inject(MainActivity mainActivity);
+    void inject(PhotoDetailsActivity photoDetailsActivity);
     Context context();
     ThreadExecutor threadExecutor();
     PostExecutionThread postExecutionThread();

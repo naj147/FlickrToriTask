@@ -2,21 +2,23 @@ package com.example.datalayer.repository.datasource;
 
 import com.example.datalayer.cache.PhotosCache;
 import com.example.datalayer.entity.PhotosEntity;
+import com.example.datalayer.entity.UserEntity;
 import com.example.datalayer.net.API;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 
+import static com.example.datalayer.net.API.METHOD1;
+import static com.example.datalayer.net.API.METHOD2;
+import static com.example.datalayer.net.API.METHOD3;
+import static com.example.datalayer.net.API.api_key;
+import static com.example.datalayer.net.API.njcb;
+import static com.example.datalayer.net.API.page;
+import static com.example.datalayer.net.API.format;
+
 public class PhotosCloudDataStore implements  PhotosDataStore {
     private final API apiService;
     private final PhotosCache photosCache;
-    //TEST PURPOSES
-    private  final String METHOD1 = "flickr.photos.getRecent";
-    private  final String METHOD2 = "method=flickr.photos.search";
-    private  final String api_key= "b59eaa142fbb03d0ba6c93882fd62e30";
-    private  final int page=1;
-    private final int njcb = 1;
-    private final String format = "json";
 
     public PhotosCloudDataStore(API apiService, PhotosCache photosCache) {
         this.apiService = apiService;
@@ -24,10 +26,10 @@ public class PhotosCloudDataStore implements  PhotosDataStore {
     }
 
     @Override
-    public Observable<PhotosEntity> photos(int method,String title, String tags) {
+    public Observable<PhotosEntity> photos(int method,String param1, String param2) {
         switch (method){
             case 2 :
-                return apiService.searchForImages(METHOD2,api_key,tags,title,page,format,njcb).doOnNext(new Consumer<PhotosEntity>() {
+                return apiService.searchForImages(METHOD2,api_key,param1,param2,page,format,njcb).doOnNext(new Consumer<PhotosEntity>() {
                 @Override
                 public void accept(PhotosEntity photosEntity) throws Exception {
                     photosCache.put(photosEntity);
@@ -44,6 +46,16 @@ public class PhotosCloudDataStore implements  PhotosDataStore {
         }
 
 
+    }
+
+    @Override
+    public Observable<UserEntity> userDetails(int method, String param1) {
+        return apiService.getUser(METHOD3,api_key,param1,page,format,njcb).doOnNext(new Consumer<UserEntity>() {
+            @Override
+            public void accept(UserEntity userEntity) throws Exception {
+                photosCache.put(userEntity);
+            }
+        });
     }
 }
 

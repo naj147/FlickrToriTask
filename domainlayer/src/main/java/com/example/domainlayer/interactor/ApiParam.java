@@ -2,20 +2,21 @@ package com.example.domainlayer.interactor;
 
 public class ApiParam {
 
-    //int method,String title, String tags
+    //int method,String param1, String param2
     int method;
-    String title;
-    String tags;
+    String param1;
+    String param2;
 
     public ApiParam() {
         this.method=0;
     }
 
-    public ApiParam(int method, String title, String tags) {
+    public ApiParam(int method, String param1, String param2) {
         this.method = method;
-        this.title = title;
-        this.tags = tags;
+        this.param1 = param1;
+        this.param2 = param2;
     }
+
 
     public int getMethod() {
         return method;
@@ -25,20 +26,20 @@ public class ApiParam {
         this.method = method;
     }
 
-    public String getTitle() {
-        return title;
+    public String getParam1() {
+        return param1;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setParam1(String param1) {
+        this.param1 = param1;
     }
 
-    public String getTags() {
-        return tags;
+    public String getParam2() {
+        return param2;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setParam2(String param2) {
+        this.param2 = param2;
     }
 }
 

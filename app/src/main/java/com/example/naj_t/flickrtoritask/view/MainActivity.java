@@ -1,6 +1,7 @@
 package com.example.naj_t.flickrtoritask.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.example.naj_t.flickrtoritask.DPINJ.components.ApplicationComponent;
 import com.example.naj_t.flickrtoritask.R;
 import com.example.naj_t.flickrtoritask.adapter.PhotosAdapter;
 import com.example.naj_t.flickrtoritask.adapter.PhotosLayoutManager;
+import com.example.naj_t.flickrtoritask.models.PhotoModel;
 import com.example.naj_t.flickrtoritask.models.PhotosModel;
 import com.example.naj_t.flickrtoritask.presenters.PhotosPresenter;
 import com.facebook.stetho.Stetho;
@@ -27,6 +29,13 @@ import butterknife.OnClick;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity  implements PhotosListView{
+    public static final String PHOTO_ID = "ID";
+    public static final String PHOTO_OWNER = "OWNER";
+    public static final String PHOTO_FARM = "FARM";
+    public static final String PHOTO_TITLE = "TITLE";
+    public static final String PHOTO_SERVER = "SERVER";
+    public static final String PHOTO_SECRET = "SECRET";
+
     @Inject
     PhotosPresenter photosPresenter;
     @Inject
@@ -145,6 +154,17 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     @Override
     public void showError(String message) {
 
+    }
+
+    public  void setPhotoClicked(PhotoModel photoClicked){
+        Intent intent = new Intent(this, PhotoDetailsActivity.class);
+        intent.putExtra(PHOTO_ID, photoClicked.getId());
+        intent.putExtra(PHOTO_OWNER, photoClicked.getOwner());
+        intent.putExtra(PHOTO_FARM, photoClicked.getFarm());
+        intent.putExtra(PHOTO_SERVER, photoClicked.getServer());
+        intent.putExtra(PHOTO_SECRET, photoClicked.getSecret());
+        intent.putExtra(PHOTO_TITLE,photoClicked.getTitle());
+        startActivity(intent);
     }
 
     @Override

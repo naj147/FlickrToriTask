@@ -33,6 +33,7 @@ public class PhotosPresenterTest {
         photosPresenter = new PhotosPresenter(mockGetPhotos,mockPhotosModelMapper);
         photosPresenter.setView(mockPhotosListView);
     }
+
     @Test
     @SuppressWarnings("unchecked")
     public void testPhotosPresenterLoader(){

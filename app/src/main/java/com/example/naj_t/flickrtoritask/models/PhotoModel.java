@@ -11,6 +11,28 @@ public class PhotoModel {
     private int isPublic;
     private int isFriend;
     private int isFamily;
+    private UserModel user;
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
+    public PhotoModel(String id, String owner, String secret, String server, String farm, String title, int isPublic, int isFriend, int isFamily, UserModel user) {
+        this.id = id;
+        this.owner = owner;
+        this.secret = secret;
+        this.server = server;
+        this.farm = farm;
+        Title = title;
+        this.isPublic = isPublic;
+        this.isFriend = isFriend;
+        this.isFamily = isFamily;
+        this.user = user;
+    }
 
     public PhotoModel(String id, String owner, String secret, String server, String farm, String title, int isPublic, int isFriend, int isFamily) {
         this.id = id;

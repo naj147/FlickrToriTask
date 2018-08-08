@@ -1,25 +1,20 @@
 package com.example.datalayer.cache;
 
 import com.example.datalayer.entity.PhotosEntity;
-
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import com.example.datalayer.entity.UserEntity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.realm.Realm;
+import io.realm.RealmQuery;
 
 @Singleton
 public class PhotosCacheImpl implements PhotosCache {
     @Inject
     public PhotosCacheImpl() {
     }
-
     private static final long EXP_TIME =  10 * 1000; //1m
 
 //    private String modifyDateLayout(String inputDate) throws ParseException{
@@ -62,6 +57,11 @@ public class PhotosCacheImpl implements PhotosCache {
     }
 
     @Override
+    public boolean isCached(UserEntity userEntity) {
+        return getUserEntity(userEntity) != null;
+    }
+
+    @Override
     public boolean isCached() {
         return getPhotosEntity() != null;
     }
@@ -70,6 +70,21 @@ public class PhotosCacheImpl implements PhotosCache {
     public Observable<PhotosEntity> get() {
         PhotosEntity photosEntity = getPhotosEntity();
         return Observable.just(photosEntity);
+    }
+
+    @Override
+    public Observable<UserEntity> getUser(String userID) {
+        UserEntity userEntity =  getUserEntity(new UserEntity(userID));
+        return  Observable.just(userEntity);
+    }
+
+    @Override
+    public void put(UserEntity userEntity) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(userEntity);
+        realm.commitTransaction();
+        realm.close();
     }
 
     @Override
@@ -127,4 +142,33 @@ try {
 
         return photosEntity;
     }
+
+    private UserEntity getUserEntity(UserEntity givenUserEntity) {
+        UserEntity userEntity = new UserEntity();
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+            RealmQuery<UserEntity> query = realm.where(UserEntity.class).equalTo("id", givenUserEntity.getId());
+            UserEntity first= query.findFirst();
+            if (first == null) {
+                realm.cancelTransaction();
+                return null;
+            }
+            userEntity = first;
+
+
+        } catch (Throwable e) {
+            if (realm != null && realm.isInTransaction())
+                realm.cancelTransaction();
+
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+
+        }
+        return userEntity;
+    }
+
+
 }

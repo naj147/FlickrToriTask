@@ -28,6 +28,9 @@ public class itemTypeAdapterFactory implements TypeAdapterFactory {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
                     if (jsonObject.has("photos")) {
                         jsonElement = jsonObject.getAsJsonObject("photos");
+                    }else if(jsonObject.has("person"))
+                    {
+                        jsonElement = jsonObject.getAsJsonObject("person");
                     }
                 }
                 return delegate.fromJsonTree(jsonElement);

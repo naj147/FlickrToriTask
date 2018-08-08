@@ -6,6 +6,7 @@ import com.example.domainlayer.interactor.ApiParam;
 import com.example.domainlayer.interactor.DefaultObserver;
 import com.example.domainlayer.interactor.GetPhotos;
 import com.example.domainlayer.model.Photos;
+import com.example.naj_t.flickrtoritask.DPINJ.PerActivity;
 import com.example.naj_t.flickrtoritask.models.Mapper.PhotosModelMapper;
 import com.example.naj_t.flickrtoritask.models.PhotosModel;
 import com.example.naj_t.flickrtoritask.view.PhotosListView;
@@ -13,6 +14,8 @@ import com.example.naj_t.flickrtoritask.view.PhotosListView;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
+
+
 
 public class PhotosPresenter implements Presenter {
 
@@ -58,7 +61,7 @@ public class PhotosPresenter implements Presenter {
         this.photosListView.showError(errorMessage);
     }
 
-    private void showUsersCollectionInView(Photos photos) {
+    private void showPhotosCollectionInView(Photos photos) {
         final PhotosModel photosModelCollection = this.photosModelMapper.transform(photos);
         this.photosListView.renderPhotosList(photosModelCollection);
     }
@@ -100,7 +103,7 @@ public class PhotosPresenter implements Presenter {
 
         @Override
         public void onNext(Photos photos) {
-            PhotosPresenter.this.showUsersCollectionInView(photos);
+            PhotosPresenter.this.showPhotosCollectionInView(photos);
         }
     }
 }

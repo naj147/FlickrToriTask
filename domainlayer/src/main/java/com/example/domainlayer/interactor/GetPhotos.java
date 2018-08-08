@@ -23,6 +23,6 @@ public class GetPhotos extends UseCase<Photos,ApiParam> {
 
     @Override
     public Observable<Photos> buildUseCaseObservable(ApiParam apiParam) {
-        return this.photosRepository.photos(apiParam.getMethod(),apiParam.getTags(),apiParam.getTitle());
+        return this.photosRepository.photos(apiParam.getMethod(),apiParam.getParam2(),apiParam.getParam1());
     }
 }

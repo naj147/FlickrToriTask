@@ -1,6 +1,7 @@
 package com.example.datalayer.net;
 
 import com.example.datalayer.entity.PhotosEntity;
+import com.example.datalayer.entity.UserEntity;
 
 import java.util.List;
 
@@ -10,6 +11,17 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface API {
+
+
+    //API SPECIFIC CONSTANTS
+
+    String METHOD1 = "flickr.photos.getRecent";
+    String METHOD2 = "flickr.photos.search";
+    String METHOD3 = "flickr.people.getInfo";
+    String api_key= "b59eaa142fbb03d0ba6c93882fd62e30";
+    int page=1;
+    int njcb = 1;
+    String format = "json";
 
     //GET RECENT SERVICE
 
@@ -21,6 +33,9 @@ public interface API {
 
     @GET("/services/rest/")
     Observable<PhotosEntity> searchForImages(@Query(("method")) String method, @Query(("api_key")) String api_key,@Query("tags") String tags, @Query("text") String text,@Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
+
+    @GET("/services/rest/")
+    Observable<UserEntity> getUser(@Query(("method")) String method, @Query(("api_key")) String api_key, @Query("user_id") String userID, @Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
     /*
     * public interface RecipeService {
     @GET("{recipeId}")
