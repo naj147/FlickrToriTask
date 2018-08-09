@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context=".view.PhotoDetailsActivity">
 <RelativeLayout
     android:id="@+id/header"
@@ -33,10 +34,19 @@
         android:layout_centerVertical="true"
         android:id="@+id/cancel"
         android:layout_width="38dp"
+        android:tint="@android:color/white"
+        android:backgroundTint="@android:color/white"
         android:layout_height="38dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         android:layout_alignParentRight="true"/>
 </RelativeLayout>
+    <View
+        android:layout_marginTop="2dp"
+        android:id="@+id/horizontal_divider"
+        android:layout_above="@id/imageTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/white" />
 <TextView
     android:layout_marginLeft="4dp"
     android:id="@+id/imageTitle"
@@ -45,11 +55,16 @@
     android:layout_width="match_parent"
     android:minHeight="80dp"
     android:textStyle="bold"
+
+    android:textColor="@android:color/white"
     android:layout_height="wrap_content" />
 <ImageView
+    android:layout_below="@id/header"
+    android:layout_above="@id/horizontal_divider"
     android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
     android:id="@+id/imageSelected"
-    android:minHeight="300dp"
+    android:scaleType="fitCenter"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="match_parent" />
 </RelativeLayout>

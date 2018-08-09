@@ -50,10 +50,10 @@ public class PhotosPresenter implements Presenter {
         this.photosListView.hideRetry();
     }
 
-    public void loadPhotos() {
+    public void loadPhotos(int page) {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getPhotos();
+        this.getPhotos(page);
     }
 
     private void showErrorMessage(ErrorBundle errorBundle) {
@@ -67,7 +67,17 @@ public class PhotosPresenter implements Presenter {
     }
 
     private void getPhotos() {
+        getPhotos(1);
+    }
+    private void getPhotos(String text, int page) {
         ApiParam apiParam = new ApiParam();
+        this.getPhotosUseCase.execute(new PhotosObserver(),apiParam );
+    }
+    private void getPhotos(int page) {
+        if(page==0)
+            page=1;
+        ApiParam apiParam = new ApiParam();
+        apiParam.setParam2(page);
         this.getPhotosUseCase.execute(new PhotosObserver(),apiParam );
     }
 

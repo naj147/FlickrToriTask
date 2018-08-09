@@ -1,9 +1,12 @@
 package com.example.naj_t.flickrtoritask.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,24 +45,36 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
     TextView username;
     @BindView(R.id.userImage)
     ImageView userImage;
+    @BindView(R.id.cancel)
+    ImageView cancelImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_details);
-        ButterKnife.bind(this);
-        this.getApplicationComponent().inject(this);
-        this.photoDetailPresenter.setView(this);
-        Intent i =getIntent();
-        PhotoModel photoModel = getPhotoModelFromIntent(i);
-        renderPhoto(photoModel);
-        Timber.tag("fatzo").d("PhotoModel%s", photoModel.getId());
+        initialize(this);
     }
 
     protected ApplicationComponent getApplicationComponent() {
         return ((AndroidApplication) getApplication()).getApplicationComponent();
     }
 
+    public void initialize(final PhotoDetailsActivity context){
+        ButterKnife.bind(context);
+        this.getApplicationComponent().inject(context);
+        this.photoDetailPresenter.setView(context);
+        cancelImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.onBackPressed();
+            }
+        });
 
+        Intent i =context.getIntent();
+        PhotoModel photoModel = getPhotoModelFromIntent(i);
+        renderPhoto(photoModel);
+        Timber.tag("fatzo").d("PhotoModel%s", photoModel.getId());
+
+    }
     private  Boolean intentIsFull(Intent i){
         return  i.hasExtra(PHOTO_ID)&&i.hasExtra(PHOTO_OWNER)&&i.hasExtra(PHOTO_FARM)&&i.hasExtra(PHOTO_SERVER)&&i.hasExtra(PHOTO_SECRET)&& i.hasExtra(PHOTO_TITLE);
     }
@@ -95,10 +110,9 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
         if(userModel!=null){
             //http://farm{icon-farm}.staticflickr.com/{icon-server}/buddyicons/{nsid}.jpg
             String url = "http://farm"+userModel.getIconfarm()+".staticflickr.com/"+userModel.getIconserver()+"/buddyicons/"+userModel.getNsid()+".jpg";
-            picasso.load(url).noFade().into(userImage);
+            picasso.load(url).noFade().placeholder(R.color.cardview_shadow_start_color).into(userImage);
             username.setText(userModel.getUsername());
         }
-
     }
 
     @Override

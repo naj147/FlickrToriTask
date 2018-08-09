@@ -19,11 +19,13 @@ import com.squareup.picasso.Picasso;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Handler;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 
 public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>{
@@ -76,9 +78,10 @@ public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosVie
         return position;
     }
 
+
     public  void setPhotosCollection(Collection<PhotoModel> photosCollection){
     if(photosCollection!=null){
-        this.photosCollection = (List<PhotoModel>) photosCollection;
+        this.photosCollection=((List<PhotoModel>) photosCollection);
         this.notifyDataSetChanged();
     }
 

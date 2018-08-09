@@ -14,7 +14,7 @@ class PhotosLocalDataStore implements PhotosDataStore {
     
 
     @Override
-    public Observable<PhotosEntity> photos(int method, String title, String tags) {
+    public Observable<PhotosEntity> photos(int method, String title,int page) {
         return photosCache.get();
     }
 

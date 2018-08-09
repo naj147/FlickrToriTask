@@ -26,17 +26,18 @@ public class PhotosCloudDataStore implements  PhotosDataStore {
     }
 
     @Override
-    public Observable<PhotosEntity> photos(int method,String param1, String param2) {
+    public Observable<PhotosEntity> photos(int method,String param1, int param2) {
+        //Param 1 is the Text for search, the
         switch (method){
             case 2 :
-                return apiService.searchForImages(METHOD2,api_key,param1,param2,page,format,njcb).doOnNext(new Consumer<PhotosEntity>() {
+                return apiService.searchForImages(METHOD2,api_key,param1,param2,format,njcb).doOnNext(new Consumer<PhotosEntity>() {
                 @Override
                 public void accept(PhotosEntity photosEntity) throws Exception {
                     photosCache.put(photosEntity);
                 }
             });
 
-            default : return apiService.listImages(METHOD1,api_key,page,format,njcb).doOnNext(new Consumer<PhotosEntity>() {
+            default : return apiService.listImages(METHOD1,api_key,param2,format,njcb).doOnNext(new Consumer<PhotosEntity>() {
                 @Override
                 public void accept(PhotosEntity photosEntity) throws Exception {
                     photosCache.put(photosEntity);

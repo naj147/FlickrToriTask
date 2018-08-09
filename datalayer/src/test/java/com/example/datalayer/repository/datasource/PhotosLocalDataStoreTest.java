@@ -24,7 +24,7 @@ public class PhotosLocalDataStoreTest {
     }
     @Test
     public void getPhotosFromCacheTest(){
-        photosLocalDataStore.photos(0,null,null);
+        photosLocalDataStore.photos(0,null,0);
         photosLocalDataStore.userDetails(0,null);
         Mockito.verify(photosCache).get();
         Mockito.verify(photosCache).getUser(null);

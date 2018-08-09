@@ -31,8 +31,8 @@ private final UserMapper userMapper;
     }
 
     @Override
-    public Observable<Photos> photos(int method,String title, String tags) {
-        return photosDataStoreFactory.create().photos( method,title,tags).map(new Function<PhotosEntity, Photos>() {
+    public Observable<Photos> photos(int method,String title, int page) {
+        return photosDataStoreFactory.create().photos( method,title,page).map(new Function<PhotosEntity, Photos>() {
             @Override
             public Photos apply(PhotosEntity photosEntity) throws Exception {
 //                Timber.tag("HEY").d("I was in PhotosDataRepo");

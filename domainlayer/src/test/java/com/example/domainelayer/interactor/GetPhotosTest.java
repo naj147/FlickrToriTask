@@ -34,7 +34,7 @@ public class GetPhotosTest {
     public  void getPhotosBuildUseCaseObservableTest(){
         ApiParam apiParam = mock(ApiParam.class);
         getPhotos.buildUseCaseObservable(apiParam);
-        verify(mockPhotosRepository).photos(apiParam.getMethod(),apiParam.getParam2(),apiParam.getParam1());
+        verify(mockPhotosRepository).photos(apiParam.getMethod(),apiParam.getParam1(),apiParam.getParam2());
         verifyNoMoreInteractions(mockPhotosRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);

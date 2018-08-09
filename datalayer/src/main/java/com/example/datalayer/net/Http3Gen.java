@@ -28,6 +28,7 @@ public class Http3Gen {
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return  interceptor;
+
     }
     public OkHttpClient okHttpClient(){
         return  new OkHttpClient.Builder()

@@ -5,13 +5,13 @@ public class ApiParam {
     //int method,String param1, String param2
     int method;
     String param1;
-    String param2;
+    int param2;
 
     public ApiParam() {
         this.method=0;
     }
 
-    public ApiParam(int method, String param1, String param2) {
+    public ApiParam(int method, String param1, int param2) {
         this.method = method;
         this.param1 = param1;
         this.param2 = param2;
@@ -34,11 +34,11 @@ public class ApiParam {
         this.param1 = param1;
     }
 
-    public String getParam2() {
+    public int getParam2() {
         return param2;
     }
 
-    public void setParam2(String param2) {
+    public void setParam2(int param2) {
         this.param2 = param2;
     }
 }

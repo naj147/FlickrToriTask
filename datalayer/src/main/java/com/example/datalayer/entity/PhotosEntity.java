@@ -17,7 +17,6 @@ public class PhotosEntity extends RealmObject {
     @Exclude
     @PrimaryKey
     String id;
-    // page="2" pages="10" perpage="100" total="1000"
     @SerializedName("page")
     private int page;
     @SerializedName("pages")

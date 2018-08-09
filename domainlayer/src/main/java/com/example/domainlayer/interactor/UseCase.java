@@ -43,6 +43,9 @@ public abstract class UseCase<T,Params> {
             disposables.dispose();
         }
     }
+    public boolean isDisposed(){
+        return  disposables.isDisposed();
+    }
 
     /**
      * Dispose from current {@link CompositeDisposable}.

@@ -4,6 +4,7 @@ package com.example.domainlayer.interactor;
 import io.reactivex.observers.DisposableObserver;
 
 public class DefaultObserver<T> extends DisposableObserver<T> {
+
     @Override public void onNext(T t) {
         // no-op by default.
     }

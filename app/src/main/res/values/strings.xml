@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">FlickrToriTask</string>
+    <string name="app_label">flickrSearch</string>
+    <string name="search_hint">What are you looking for?</string>
 
     <style name="AppTheme.ProgressBar">
         <item name="android:layout_width">wrap_content</item>

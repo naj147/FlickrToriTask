@@ -44,12 +44,12 @@ public class PhotosDataRepositoryTest {
     public void getPhotosTest(){
         PhotosEntity photosEntity = new PhotosEntity();
         UserEntity userEntity = new UserEntity();
-        given(photosDataStore.photos(0,null,null)).willReturn(Observable.just(photosEntity));
+        given(photosDataStore.photos(0,null,0)).willReturn(Observable.just(photosEntity));
         given(photosDataStore.userDetails(0,null)).willReturn(Observable.just(userEntity));
-        photosDataRepository.photos(0,null,null);
+        photosDataRepository.photos(0,null,0);
         photosDataRepository.userDetails(0,null);
         verify(photosDataStoreFactory,times(2)).create();
-        verify(photosDataStore).photos(0,null,null);
+        verify(photosDataStore).photos(0,null,0);
         verify(photosDataStore).userDetails(0,null);
     }
 
