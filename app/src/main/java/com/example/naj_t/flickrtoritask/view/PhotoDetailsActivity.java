@@ -25,12 +25,12 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDetailsView{
-    public static final String PHOTO_ID = "ID";
-    public static final String PHOTO_OWNER = "OWNER";
-    public static final String PHOTO_FARM = "FARM";
-    public static final String PHOTO_TITLE = "TITLE";
-    public static final String PHOTO_SERVER = "SERVER";
-    public static final String PHOTO_SECRET = "SECRET";
+    public static final String PHOTO_ID = MainActivity.PHOTO_ID;
+    public static final String PHOTO_OWNER = MainActivity.PHOTO_OWNER;
+    public static final String PHOTO_FARM = MainActivity.PHOTO_FARM;
+    public static final String PHOTO_TITLE = MainActivity.PHOTO_TITLE;
+    public static final String PHOTO_SERVER = MainActivity.PHOTO_SERVER;
+    public static final String PHOTO_SECRET = MainActivity.PHOTO_SECRET;
 
     @Inject
     PhotoDetailPresenter photoDetailPresenter;
@@ -51,7 +51,7 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_details);
-        initialize(this);
+        initialize((PhotoDetailsActivity) this);
     }
 
     protected ApplicationComponent getApplicationComponent() {
@@ -72,7 +72,7 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
         Intent i =context.getIntent();
         PhotoModel photoModel = getPhotoModelFromIntent(i);
         renderPhoto(photoModel);
-        Timber.tag("fatzo").d("PhotoModel%s", photoModel.getId());
+//        Timber.tag("fatzo").d("PhotoModel%s", photoModel.getId());
 
     }
     private  Boolean intentIsFull(Intent i){

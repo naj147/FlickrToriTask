@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -39,7 +40,7 @@ public class PhotosPresenterTest {
     public void testPhotosPresenterLoader(){
 //        given(mockApiParam.getMethod()).willReturn(0);
         given(mockPhotosListView.context()).willReturn(mockContext);
-        photosPresenter.loadPhotos();
+        photosPresenter.loadPhotos(-1);
         verify(mockPhotosListView).hideRetry();
         verify(mockPhotosListView).showLoading();
         verify(mockGetPhotos).execute(any(DefaultObserver.class), any(ApiParam.class));

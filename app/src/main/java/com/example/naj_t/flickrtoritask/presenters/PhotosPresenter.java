@@ -74,7 +74,7 @@ public class PhotosPresenter implements Presenter {
         this.getPhotosUseCase.execute(new PhotosObserver(),apiParam );
     }
     private void getPhotos(int page) {
-        if(page==0)
+        if(page<1)
             page=1;
         ApiParam apiParam = new ApiParam();
         apiParam.setParam2(page);

@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.domainlayer.model.Photo;
 import com.example.naj_t.flickrtoritask.AndroidApplication;
+import com.example.naj_t.flickrtoritask.BuildConfig;
 import com.example.naj_t.flickrtoritask.DPINJ.components.ApplicationComponent;
 import com.example.naj_t.flickrtoritask.R;
 import com.example.naj_t.flickrtoritask.adapter.PhotosAdapter;
@@ -49,12 +53,14 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     PhotosPresenter photosPresenter;
     @Inject
     PhotosAdapter photosAdapter;
-    @BindView(R.id.page)
-    TextView textViewPage;
-    @BindView(R.id.pages)
-    TextView textViewPages;
-    @BindView(R.id.total)
-    TextView textViewTotal;
+    @BindView(R.id.search_tab)
+    SearchView searchView;
+//    @BindView(R.id.page)
+//    TextView textViewPage;
+//    @BindView(R.id.pages)
+//    TextView textViewPages;
+//    @BindView(R.id.total)
+//    TextView textViewTotal;
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.load_prog)
@@ -78,13 +84,24 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
 
     }
 
+
+
+    @OnClick(R.id.search_tab)
+    public void setupSearchView(){
+        searchView.onActionViewExpanded();
+    }
+
     public void initializingRealm(Context context){
         Realm.init(context);
+        //THIS CREATES A MEMORY LEAK AND WAS USED ONLY FOR DEV PURPOSES
+
+        //if(BuildConfig.DEBUG){
 //        Stetho.initialize(
 //                Stetho.newInitializerBuilder(context)
 //                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(context))
 //                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))
 //                        .build());
+        //}
     }
 
     private void loadPhotos(int page) {
@@ -144,6 +161,25 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         this.recyclerView.setHasFixedSize(true);
         this.recyclerView.setNestedScrollingEnabled(false);
         this.recyclerView.setAdapter(photosAdapter);
+
+        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onGlobalLayout() {
+                if (recyclerViewReadyCallback != null) {
+                    recyclerViewReadyCallback.onLayoutReady();
+                }
+                recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        recyclerViewReadyCallback = new RecyclerViewReadyCallback() {
+            @Override
+            public void onLayoutReady() {
+               Toast.makeText(context(),"done laying down items",Toast.LENGTH_SHORT).show();
+            }
+        };
+
     }
 
     protected ApplicationComponent getApplicationComponent() {
@@ -154,10 +190,10 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     public void renderPhotosList(PhotosModel photosModel) {
         if(photosModel!=null){
 //            Toast.makeText(this,photosModel.getPage() + " " + photosModel.getPages(),Toast.LENGTH_LONG).show();
-            this.textViewPage.setText("page : "+photosModel.getPage());
-            PAGE_SIZE = photosModel.getPages();
-            this.textViewPages.setText("Pages : "+photosModel.getPages());
-            this.textViewTotal.setText("Total :" +photosModel.getTotal());
+//            this.textViewPage.setText("page : "+photosModel.getPage());
+//            PAGE_SIZE = photosModel.getPages();
+//            this.textViewPages.setText("Pages : "+photosModel.getPages());
+//            this.textViewTotal.setText("Total :" +photosModel.getTotal());
             this.photosAdapter.setPhotosCollection(photosModel.getPhoto());
         }
     }
@@ -222,4 +258,12 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     public Context context() {
         return this.getApplicationContext();
     }
+
+
+    private RecyclerViewReadyCallback recyclerViewReadyCallback;
+
+    public interface RecyclerViewReadyCallback {
+        void onLayoutReady();
+    }
+
 }
