@@ -12,9 +12,9 @@ import static com.example.datalayer.net.API.METHOD1;
 import static com.example.datalayer.net.API.METHOD2;
 import static com.example.datalayer.net.API.METHOD3;
 import static com.example.datalayer.net.API.api_key;
+import static com.example.datalayer.net.API.format;
 import static com.example.datalayer.net.API.njcb;
 import static com.example.datalayer.net.API.page;
-import static com.example.datalayer.net.API.format;
 
 public class PhotosCloudDataStore implements  PhotosDataStore {
     private final API apiService;
@@ -30,16 +30,16 @@ public class PhotosCloudDataStore implements  PhotosDataStore {
         //Param 1 is the Text for search, the
         switch (method){
             case 2 :
-                return apiService.searchForImages(METHOD2,api_key,param1,param2,format,njcb).doOnNext(new Consumer<PhotosEntity>() {
+                return apiService.searchForImages(METHOD2, api_key, param1, param1, param2, format, njcb).doOnNext(new Consumer<PhotosEntity>() {
                 @Override
-                public void accept(PhotosEntity photosEntity) throws Exception {
+                public void accept(PhotosEntity photosEntity) {
                     photosCache.put(photosEntity);
                 }
             });
 
             default : return apiService.listImages(METHOD1,api_key,param2,format,njcb).doOnNext(new Consumer<PhotosEntity>() {
                 @Override
-                public void accept(PhotosEntity photosEntity) throws Exception {
+                public void accept(PhotosEntity photosEntity) {
                     photosCache.put(photosEntity);
                 }
             });
@@ -53,7 +53,7 @@ public class PhotosCloudDataStore implements  PhotosDataStore {
     public Observable<UserEntity> userDetails(int method, String param1) {
         return apiService.getUser(METHOD3,api_key,param1,page,format,njcb).doOnNext(new Consumer<UserEntity>() {
             @Override
-            public void accept(UserEntity userEntity) throws Exception {
+            public void accept(UserEntity userEntity) {
                 photosCache.put(userEntity);
             }
         });

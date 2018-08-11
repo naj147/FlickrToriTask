@@ -3,11 +3,8 @@ package com.example.datalayer.net;
 import com.example.datalayer.entity.PhotosEntity;
 import com.example.datalayer.entity.UserEntity;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface API {
@@ -32,7 +29,7 @@ public interface API {
 
 
     @GET("/services/rest/")
-    Observable<PhotosEntity> searchForImages(@Query(("method")) String method, @Query(("api_key")) String api_key, @Query("text") String text,@Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
+    Observable<PhotosEntity> searchForImages(@Query(("method")) String method, @Query(("api_key")) String api_key, @Query("tags") String tags, @Query("text") String text, @Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
 
     @GET("/services/rest/")
     Observable<UserEntity> getUser(@Query(("method")) String method, @Query(("api_key")) String api_key, @Query("user_id") String userID, @Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);

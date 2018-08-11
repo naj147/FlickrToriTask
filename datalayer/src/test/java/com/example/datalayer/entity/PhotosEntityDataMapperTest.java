@@ -1,16 +1,12 @@
 package com.example.datalayer.entity;
 
 
-import android.util.Log;
-
 import com.example.datalayer.entity.mapper.PhotosMapper;
 import com.example.domainlayer.model.Photo;
 import com.example.domainlayer.model.Photos;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.sql.Timestamp;
 
 import io.realm.RealmList;
 
@@ -27,7 +23,7 @@ public class PhotosEntityDataMapperTest {
     private PhotosMapper photosMapper;
 
 @Before
-public void setUp() throws Exception{
+public void setUp() {
     photosMapper = new PhotosMapper();
 }
 
@@ -38,12 +34,11 @@ public void testTransformPhotosMapper() {
     assertThat(photos).isInstanceOf(Photos.class);
     assertThat(photos.getPages()).isEqualTo(FAKE_NBR_PAGES);
     LASTUPDATED = System.currentTimeMillis();
-    assertThat(Long.parseLong(photos.getLastUpdated())).isLessThan(LASTUPDATED);
+    assertThat(Long.parseLong(photos.getLastUpdated())).isLessThanOrEqualTo(LASTUPDATED);
     assertThat(photos.getPhoto().toArray()[0]).isInstanceOf(Photo.class);
     assertThat(photos.getPhoto()).hasSize(1);
     assertThat(photos.getPhoto().get(0).getId()).isEqualTo(FAKE_PHOTO_ID);
     assertThat(photos.getPhoto().get(0).getOwner()).isEqualTo(FAKE_OWNER);
-
 }
 
 public PhotosEntity createFakesPhotosEntity(){

@@ -2,6 +2,8 @@
     <string name="app_name">FlickrToriTask</string>
     <string name="app_label">flickrSearch</string>
     <string name="search_hint">What are you looking for?</string>
+    <string name="recent_pictures">Recent Pictures</string>
+    <string name="search_result">Search Result</string>
 
     <style name="AppTheme.ProgressBar">
         <item name="android:layout_width">wrap_content</item>

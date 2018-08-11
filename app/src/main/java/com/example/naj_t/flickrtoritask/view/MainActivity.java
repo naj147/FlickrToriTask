@@ -1,25 +1,17 @@
 package com.example.naj_t.flickrtoritask.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.domainlayer.model.Photo;
 import com.example.naj_t.flickrtoritask.AndroidApplication;
-import com.example.naj_t.flickrtoritask.BuildConfig;
 import com.example.naj_t.flickrtoritask.DPINJ.components.ApplicationComponent;
 import com.example.naj_t.flickrtoritask.R;
 import com.example.naj_t.flickrtoritask.adapter.PhotosAdapter;
@@ -27,10 +19,6 @@ import com.example.naj_t.flickrtoritask.adapter.PhotosLayoutManager;
 import com.example.naj_t.flickrtoritask.models.PhotoModel;
 import com.example.naj_t.flickrtoritask.models.PhotosModel;
 import com.example.naj_t.flickrtoritask.presenters.PhotosPresenter;
-import com.facebook.stetho.Stetho;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -38,7 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity  implements PhotosListView{
     public static final String PHOTO_ID = "ID";
@@ -47,6 +34,7 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     public static final String PHOTO_TITLE = "TITLE";
     public static final String PHOTO_SERVER = "SERVER";
     public static final String PHOTO_SECRET = "SECRET";
+    public static String QUERY = "imageSearch";
     private static int PAGE_SIZE =100;
 
     @Inject
@@ -55,12 +43,7 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     PhotosAdapter photosAdapter;
     @BindView(R.id.search_tab)
     SearchView searchView;
-//    @BindView(R.id.page)
-//    TextView textViewPage;
-//    @BindView(R.id.pages)
-//    TextView textViewPages;
-//    @BindView(R.id.total)
-//    TextView textViewTotal;
+    static String queryText = null;
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.load_prog)
@@ -69,6 +52,15 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     Button button;
     PhotosLayoutManager photosLayoutManager;
     static int page=1;
+    //    @BindView(R.id.page)
+//    TextView textViewPage;
+//    @BindView(R.id.pages)
+//    TextView textViewPages;
+//    @BindView(R.id.total)
+//    TextView textViewTotal;
+    @BindView(R.id.content_title)
+    TextView contentTitleText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,18 +69,65 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         ButterKnife.bind(this);
         initializingRealm(this);
         this.photosPresenter.setView(this);
-        if (savedInstanceState == null) {
-            this.loadPhotos(page);
+        if (!initializeIntent() && savedInstanceState == null) {
+            this.loadPhotos(null, page);
         }
+        setupSearchView(this);
         setupRecyclerView();
+
 
     }
 
 
-
+    //    @OnClick(R.id.search_tab)
+//    public void searchViewClicked(){
+//        searchView.onActionViewExpanded();
+//
+//    }
     @OnClick(R.id.search_tab)
-    public void setupSearchView(){
+    public void searchTabClicked() {
         searchView.onActionViewExpanded();
+    }
+
+    public void setupSearchView(final Context context) {
+        this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent availableIntent = getIntent();
+                if (!availableIntent.hasExtra(QUERY)) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra(QUERY, query);
+                    intent.setAction(Intent.ACTION_SEARCH);
+                    searchView.clearFocus();
+                    context.startActivity(intent);
+                    ((MainActivity) context).onPause();
+                } else {
+                    doMySearch(query);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+    public boolean initializeIntent() {
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            contentTitleText.setText(R.string.search_result);
+            String query = intent.getStringExtra(QUERY);
+            doMySearch(query);
+            return true;
+        }
+        return false;
+    }
+
+    private void doMySearch(String query) {
+        queryText = query;
+        loadPhotos(query, 1);
     }
 
     public void initializingRealm(Context context){
@@ -104,8 +143,8 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         //}
     }
 
-    private void loadPhotos(int page) {
-        this.photosPresenter.loadPhotos(page);
+    private void loadPhotos(String text, int page) {
+        this.photosPresenter.loadPhotos(text, page);
     }
 
 
@@ -128,6 +167,7 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         super.onResume();
         this.photosPresenter.resume();
     }
+
 
 
     private void setupRecyclerView() {
@@ -162,23 +202,23 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         this.recyclerView.setNestedScrollingEnabled(false);
         this.recyclerView.setAdapter(photosAdapter);
 
-        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onGlobalLayout() {
-                if (recyclerViewReadyCallback != null) {
-                    recyclerViewReadyCallback.onLayoutReady();
-                }
-                recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
+//        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+//            @Override
+//            public void onGlobalLayout() {
+//                if (recyclerViewReadyCallback != null) {
+//                    recyclerViewReadyCallback.onLayoutReady();
+//                }
+//                recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//            }
+//        });
 
-        recyclerViewReadyCallback = new RecyclerViewReadyCallback() {
-            @Override
-            public void onLayoutReady() {
-               Toast.makeText(context(),"done laying down items",Toast.LENGTH_SHORT).show();
-            }
-        };
+//        recyclerViewReadyCallback = new RecyclerViewReadyCallback() {
+//            @Override
+//            public void onLayoutReady() {
+//               Toast.makeText(context(),"done laying down items",Toast.LENGTH_SHORT).show();
+//            }
+//        };
 
     }
 
@@ -222,7 +262,7 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     }
     @OnClick(R.id.bt_retry)
     void buttonRetryClicked(){
-        MainActivity.this.loadPhotos(page);
+        MainActivity.this.loadPhotos(queryText, page);
     }
     @Override
     public void showError(String message) {

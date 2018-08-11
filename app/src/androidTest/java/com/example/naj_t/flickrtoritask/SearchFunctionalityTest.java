@@ -3,10 +3,9 @@ package com.example.naj_t.flickrtoritask;
 
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.rule.ActivityTestRule;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 
@@ -14,15 +13,18 @@ import com.example.naj_t.flickrtoritask.view.MainActivity;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -34,8 +36,8 @@ import static org.hamcrest.CoreMatchers.is;
 public class SearchFunctionalityTest {
     String mSearchString;
     @Rule
-    public MyCustomRule<MainActivity> mActivityRule = new MyCustomRule<>(
-            MainActivity.class);
+    public IntentsTestRule<MainActivity> mActivityRule =
+            new IntentsTestRule<>(MainActivity.class);
     SearchView searchView;
 
     @Before
@@ -45,13 +47,7 @@ public class SearchFunctionalityTest {
         searchView = mActivityRule.getActivity().findViewById(R.id.search_tab);
         }
 
-    @Test
-    public void searchForAnImage(){
-        onView(withId(R.id.search_tab))
-                .perform(typeSearchViewText(mSearchString), closeSoftKeyboard());
-        MatcherAssert.assertThat(searchView.getQuery().toString(), is(mSearchString));
-    }
-    public static ViewAction typeSearchViewText(final String text){
+    public static ViewAction typeSearchViewText(final String text, final boolean submit) {
         return new ViewAction(){
             @Override
             public Matcher<View> getConstraints() {
@@ -66,8 +62,23 @@ public class SearchFunctionalityTest {
 
             @Override
             public void perform(UiController uiController, View view) {
-                ((SearchView) view).setQuery(text,false);
+                ((SearchView) view).setQuery(text, submit);
             }
         };
+    }
+
+    @Test
+    public void searchForAnImage() {
+        onView(withId(R.id.search_tab))
+                .perform(typeSearchViewText(mSearchString, false), closeSoftKeyboard());
+        MatcherAssert.assertThat(searchView.getQuery().toString(), is(mSearchString));
+        onView(withId(R.id.search_tab))
+                .perform(typeSearchViewText(mSearchString, true));
+        MatcherAssert.assertThat(searchView.getQuery().toString(), is(mSearchString));
+        intended(Matchers.allOf(
+                hasComponent(hasClassName(MainActivity.class.getName())),
+                hasExtraWithKey(MainActivity.QUERY)
+        ));
+
     }
 }

@@ -6,7 +6,6 @@ import com.example.domainlayer.interactor.ApiParam;
 import com.example.domainlayer.interactor.DefaultObserver;
 import com.example.domainlayer.interactor.GetPhotos;
 import com.example.domainlayer.model.Photos;
-import com.example.naj_t.flickrtoritask.DPINJ.PerActivity;
 import com.example.naj_t.flickrtoritask.models.Mapper.PhotosModelMapper;
 import com.example.naj_t.flickrtoritask.models.PhotosModel;
 import com.example.naj_t.flickrtoritask.view.PhotosListView;
@@ -50,10 +49,10 @@ public class PhotosPresenter implements Presenter {
         this.photosListView.hideRetry();
     }
 
-    public void loadPhotos(int page) {
+    public void loadPhotos(String title, int page) {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getPhotos(page);
+        this.getPhotos(title, page);
     }
 
     private void showErrorMessage(ErrorBundle errorBundle) {
@@ -71,6 +70,11 @@ public class PhotosPresenter implements Presenter {
     }
     private void getPhotos(String text, int page) {
         ApiParam apiParam = new ApiParam();
+        if (page < 1)
+            apiParam.setParam2(1);
+        apiParam.setParam1(text);
+        if (text != null && !text.isEmpty())
+            apiParam.setMethod(2);
         this.getPhotosUseCase.execute(new PhotosObserver(),apiParam );
     }
     private void getPhotos(int page) {

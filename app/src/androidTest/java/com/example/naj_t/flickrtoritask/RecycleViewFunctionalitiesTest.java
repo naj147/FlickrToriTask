@@ -1,6 +1,5 @@
 package com.example.naj_t.flickrtoritask;
 
-import android.os.Bundle;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.SmallTest;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import com.example.naj_t.flickrtoritask.view.MainActivity;
 import com.example.naj_t.flickrtoritask.view.PhotoDetailsActivity;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,21 +18,15 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
-import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasShortClassName;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtras;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.Matchers.allOf;
 
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class RecycleViewFunctionalitiesTest {
-
     @Rule
     public IntentsTestRule<MainActivity> mIntentsRule =
             new IntentsTestRule<>(MainActivity.class);

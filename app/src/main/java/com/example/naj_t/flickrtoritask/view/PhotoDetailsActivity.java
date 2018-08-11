@@ -1,13 +1,13 @@
 package com.example.naj_t.flickrtoritask.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.naj_t.flickrtoritask.AndroidApplication;
@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
+import butterknife.OnClick;
 
 public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDetailsView{
     public static final String PHOTO_ID = MainActivity.PHOTO_ID;
@@ -37,6 +37,9 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
 
     @Inject
     Picasso picasso;
+    static PhotoModel photoModel = null;
+    @BindView(R.id.load_prog)
+    ProgressBar progressBar;
     @BindView(R.id.imageSelected)
     ImageView imageView;
     @BindView(R.id.imageTitle)
@@ -47,11 +50,14 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
     ImageView userImage;
     @BindView(R.id.cancel)
     ImageView cancelImageView;
+    @BindView(R.id.bt_retry)
+    Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_details);
-        initialize((PhotoDetailsActivity) this);
+        initialize(this);
     }
 
     protected ApplicationComponent getApplicationComponent() {
@@ -70,7 +76,7 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
         });
 
         Intent i =context.getIntent();
-        PhotoModel photoModel = getPhotoModelFromIntent(i);
+        photoModel = getPhotoModelFromIntent(i);
         renderPhoto(photoModel);
 //        Timber.tag("fatzo").d("PhotoModel%s", photoModel.getId());
 
@@ -117,27 +123,52 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
 
     @Override
     public void showLoading() {
-
+        this.progressBar.setVisibility(View.VISIBLE);
+        this.setProgressBarIndeterminateVisibility(true);
     }
 
     @Override
     public void hideLoading() {
+        this.progressBar.setVisibility(View.GONE);
+        this.setProgressBarIndeterminateVisibility(false);
+    }
 
+    @OnClick(R.id.bt_retry)
+    void buttonRetryClicked() {
+        renderPhoto(photoModel);
     }
 
     @Override
     public void showRetry() {
-
+        button.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideRetry() {
-
+        button.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(String message) {
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.photoDetailPresenter.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.photoDetailPresenter.destroy();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.photoDetailPresenter.resume();
     }
 
     @Override

@@ -30,6 +30,7 @@
         android:textSize="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <ImageView
         android:layout_centerVertical="true"
         android:id="@+id/cancel"
@@ -58,6 +59,21 @@
 
     android:textColor="@android:color/white"
     android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/load_prog"
+        style="@style/AppTheme.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true" />
+
+    <Button
+        android:id="@+id/bt_retry"
+        style="@style/AppTheme.Button"
+        android:layout_gravity="center"
+        android:text="retry" />
 <ImageView
     android:layout_below="@id/header"
     android:layout_above="@id/horizontal_divider"
