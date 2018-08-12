@@ -47,6 +47,7 @@ dependencies {
     annotationProcessor presentationDependencies.butterKnifeCompiler
     implementation presentationDependencies.rxJava
     implementation presentationDependencies.javaxAnnotation
+    implementation dataDependencies.gson
     implementation presentationDependencies.rxAndroid
     implementation developmentDependencies.Timber
     implementation developmentDependencies.leakCanary

@@ -1,5 +1,6 @@
 package com.example.naj_t.flickrtoritask.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +15,20 @@ import android.widget.TextView;
 import com.example.naj_t.flickrtoritask.AndroidApplication;
 import com.example.naj_t.flickrtoritask.DPINJ.components.ApplicationComponent;
 import com.example.naj_t.flickrtoritask.R;
+import com.example.naj_t.flickrtoritask.adapter.FilteredObjects;
 import com.example.naj_t.flickrtoritask.adapter.PhotosAdapter;
 import com.example.naj_t.flickrtoritask.adapter.PhotosLayoutManager;
+import com.example.naj_t.flickrtoritask.adapter.SearchableAdapter;
 import com.example.naj_t.flickrtoritask.models.PhotoModel;
 import com.example.naj_t.flickrtoritask.models.PhotosModel;
 import com.example.naj_t.flickrtoritask.presenters.PhotosPresenter;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.squareup.picasso.Picasso;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.inject.Inject;
 
@@ -36,7 +46,9 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     public static final String PHOTO_SECRET = "SECRET";
     public static String QUERY = "imageSearch";
     private static int PAGE_SIZE =100;
-
+    SearchView.SearchAutoComplete searchAutoComplete;
+    @Inject
+    Picasso picasso;
     @Inject
     PhotosPresenter photosPresenter;
     @Inject
@@ -50,6 +62,8 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     ProgressBar progressBar;
     @BindView(R.id.bt_retry)
     Button button;
+
+    SearchableAdapter searchableAdapter;
     PhotosLayoutManager photosLayoutManager;
     static int page=1;
     //    @BindView(R.id.page)
@@ -89,7 +103,9 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         searchView.onActionViewExpanded();
     }
 
+    @SuppressLint("RestrictedApi")
     public void setupSearchView(final Context context) {
+
         this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -112,8 +128,37 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
                 return false;
             }
         });
+
+        searchAutoComplete = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchAutoComplete.setDropDownAnchor(R.id.search_tab);
+        searchAutoComplete.setDropDownBackgroundResource(R.color.white);
+        searchAutoComplete.setThreshold(1);
+        FilteredObjects filteredObjects = getCatFromJson();
+        searchableAdapter = new SearchableAdapter(context, filteredObjects.getFilteredObject(), picasso);
+        searchAutoComplete.setAdapter(searchableAdapter);
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                String query = searchableAdapter.getLabel(position);
+                searchView.setQuery(query, false);
+                return true;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                String query = searchableAdapter.getLabel(position);
+                searchView.setQuery(query, false);
+                return true;
+            }
+        });
+
     }
 
+    public FilteredObjects getCatFromJson() {
+        InputStream in = getResources().openRawResource(R.raw.flickr_keyword_struct);
+        JsonElement element = new JsonParser().parse(new InputStreamReader(in));
+        return new Gson().fromJson(element.getAsJsonObject().toString(), FilteredObjects.class);
+    }
     public boolean initializeIntent() {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
