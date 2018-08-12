@@ -9,23 +9,20 @@
     <LinearLayout
         android:padding="16dp"
         android:layout_width="match_parent"
-        android:background="@android:color/background_dark"
+        android:background="@color/black"
         android:layout_height="wrap_content">
     <android.support.v7.widget.SearchView
-
+        style="@style/SearchViewStyle"
         android:id="@+id/search_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search Here"
         android:background="@drawable/bg_round_rect"
         android:showAsAction = "always"
-        android:iconifiedByDefault="true"
-
-        />
+        android:iconifiedByDefault="true" />
     </LinearLayout>
 
 <LinearLayout
-    android:background="@android:color/black"
+    android:background="@color/black"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
 
     @SuppressLint("RestrictedApi")
     public void setupSearchView(final Context context) {
-
+        ((EditText) this.searchView.findViewById(R.id.search_src_text)).setTextColor(getResources().getColor(R.color.black));
         this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -114,7 +115,6 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.putExtra(QUERY, query);
                     intent.setAction(Intent.ACTION_SEARCH);
-                    searchView.clearFocus();
                     context.startActivity(intent);
                     ((MainActivity) context).onPause();
                 } else {
@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     }
 
     private void doMySearch(String query) {
+        searchView.clearFocus();
         queryText = query;
         loadPhotos(query, 1);
     }
@@ -344,6 +345,13 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         return this.getApplicationContext();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (searchView.isFocused()) {
+            searchView.clearFocus();
+        }
+        super.onBackPressed();
+    }
 
     private RecyclerViewReadyCallback recyclerViewReadyCallback;
 
