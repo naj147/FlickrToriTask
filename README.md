@@ -25,7 +25,6 @@ This is a project of a Flickr Search App using Clean Architecture + Dagger 2 + R
 * ButterKnife Library Used : 8.8.1
 * RxJava Library Used : 8.8.1
 * ButterKnife Library Used :  2.16
-* Recipes scrapped from Yummly Api 1.0 : https://developer.yummly.com/
 * Java version 8 Update 25
 
 ####Testing Environment
@@ -50,7 +49,9 @@ This is a project of a Flickr Search App using Clean Architecture + Dagger 2 + R
     In case you face some errors be sure to invalidate the cache and repeat the process previously mentioned.  
 ### Architecture Applied 
 
-The purpose is the separation of concerns by keeping the business rules not knowing anything at all about the outside world, thus, they can can be tested without any dependency to any external element.
+Clean architecture :
+
+its purpose is the separation of concerns by keeping the business rules not knowing anything at all about the outside world, thus, they can can be tested without any dependency to any external element.
 
 To achieve this, my proposal is about breaking up the project into 3 different layers, in which each one has its own purpose and works separately from the others.
 
