@@ -25,6 +25,7 @@ This is a project of a Flickr Search App using Clean Architecture + Dagger 2 + R
 * ButterKnife Library Used : 8.8.1
 * RxJava Library Used : 8.8.1
 * ButterKnife Library Used :  2.16
+* Realm DB Library Used :  5.4.1
 * Java version 8 Update 25
 
 ####Testing Environment
