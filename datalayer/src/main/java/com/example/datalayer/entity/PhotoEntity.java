@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
+
+/**
+ * PhotoEntity used in the data layer.
+ */
 public class PhotoEntity extends RealmObject {
     @PrimaryKey
     @SerializedName("id")
@@ -25,6 +29,7 @@ public class PhotoEntity extends RealmObject {
     private int isFriend;
     @SerializedName("isfamily")
     private int isFamily;
+
     public PhotoEntity() {
     }
 

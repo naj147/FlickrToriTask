@@ -4,10 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
+/**
+ * Username used in UserEntity.
+ */
 public class Username extends RealmObject {
     @SerializedName("_content")
     private
     String _content;
+
     public Username() {
     }
 

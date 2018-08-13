@@ -15,7 +15,10 @@ import org.jetbrains.annotations.NotNull;
 import javax.inject.Inject;
 
 
-
+/**
+ * {@link Presenter} that controls communication between views and models of the presentation
+ * layer.
+ */
 public class PhotosPresenter implements Presenter {
 
 
@@ -49,10 +52,16 @@ public class PhotosPresenter implements Presenter {
         this.photosListView.hideRetry();
     }
 
-    public void loadPhotos(String title, int page) {
+    /**
+     * Initializes the presenter by start retrieving the photos list.
+     *
+     * @param text a string representing the title and tags of the photo to be retrieved
+     * @param page int the page number to be retrieved
+     */
+    public void loadPhotos(String text, int page) {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getPhotos(title, page);
+        this.getPhotos(text, page);
     }
 
     private void showErrorMessage(ErrorBundle errorBundle) {
@@ -68,6 +77,13 @@ public class PhotosPresenter implements Presenter {
     private void getPhotos() {
         getPhotos(1);
     }
+
+    /**
+     * A method that retrieves Photos from the backend
+     *
+     * @param text a string representing the title and tags of the photo to be retrieved
+     * @param page int the page number to be retrieved
+     */
     private void getPhotos(String text, int page) {
         ApiParam apiParam = new ApiParam();
         if (page < 1)
@@ -77,6 +93,12 @@ public class PhotosPresenter implements Presenter {
             apiParam.setMethod(2);
         this.getPhotosUseCase.execute(new PhotosObserver(),apiParam );
     }
+
+    /**
+     * A method that retrieves Photos from the backend
+     *
+     * @param page int the page number to be retrieved
+     */
     private void getPhotos(int page) {
         if(page<1)
             page=1;

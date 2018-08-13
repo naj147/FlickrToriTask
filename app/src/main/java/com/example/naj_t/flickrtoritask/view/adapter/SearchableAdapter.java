@@ -1,5 +1,6 @@
-package com.example.naj_t.flickrtoritask.adapter;
+package com.example.naj_t.flickrtoritask.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
@@ -20,10 +21,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Adaptar that manages a {@link android.support.v7.widget.SearchView} and its {@link android.support.v7.widget.SearchView.SearchAutoComplete}
+ * //
+ */
 public class SearchableAdapter extends BaseAdapter implements Filterable {
 
-    Picasso picasso;
-    Context context;
+    private Picasso picasso;
+    private Context context;
     private List<FilteredObject> originalData = null;
     private List<FilteredObject> filteredData = null;
     private LayoutInflater mInflater;
@@ -78,6 +83,7 @@ public class SearchableAdapter extends BaseAdapter implements Filterable {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     public View getView(int position, View convertView, ViewGroup parent) {
         int index1 = position;
 //        int index2=0;
@@ -116,8 +122,8 @@ public class SearchableAdapter extends BaseAdapter implements Filterable {
         return convertView;
     }
 
-    public @DrawableRes
-    int imageToBeShown(String category1) {
+    @DrawableRes
+    private int imageToBeShown(String category1) {
         switch (category1) {
             case "animals":
                 return R.drawable.animal;
@@ -149,7 +155,7 @@ public class SearchableAdapter extends BaseAdapter implements Filterable {
         @BindView(R.id.label)
         TextView text;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             this.view = view;
             ButterKnife.bind(this, view);
         }
@@ -165,7 +171,7 @@ public class SearchableAdapter extends BaseAdapter implements Filterable {
 
 
             int count = list.size();
-            final ArrayList<FilteredObject> nlist = new ArrayList<FilteredObject>(count);
+            final ArrayList<FilteredObject> nlist = new ArrayList<>(count);
             for (FilteredObject filteredObject : list) {
                 List<FilteredObject.Category2> category2List = filteredObject.hasCat(filterString);
                 if (category2List != null && !category2List.isEmpty()) {

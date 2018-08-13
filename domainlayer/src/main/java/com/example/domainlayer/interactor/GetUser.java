@@ -9,9 +9,14 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
+/**
+ * This class is an implementation of {@link UseCase} that represents a use case for
+ * retrieving a {@link User}.
+ */
 public class GetUser extends UseCase<User,ApiParam> {
 
     private final PhotosRepository photosRepository;
+
     @Inject
     public GetUser(PhotosRepository photosRepository, ThreadExecutor threadExecutor,
                    PostExecutionThread postExecutionThread) {

@@ -14,7 +14,10 @@ import org.jetbrains.annotations.NotNull;
 import javax.inject.Inject;
 
 
-
+/**
+ * {@link Presenter} that controls communication between views and models of the presentation
+ * layer.
+ */
 public class PhotoDetailPresenter implements Presenter {
 
 
@@ -47,6 +50,12 @@ public class PhotoDetailPresenter implements Presenter {
         this.getUser.dispose();
         this.photosDetailsView=null;
     }
+
+    /**
+     * Initializes the presenter by start retrieving the photosDetails and the User that uploaded the picture.
+     *
+     * @param userID A string that represent the ID for the photo owner.
+     */
     public void loadPhotoDetails(String userID) {
         this.hideViewRetry();
         this.showViewLoading();
@@ -58,6 +67,11 @@ public class PhotoDetailPresenter implements Presenter {
         this.photosDetailsView.showError(errorMessage);
     }
 
+    /**
+     * A method that retrieves a User from the backend
+     *
+     * @param userID retrieved
+     */
     private void getUser(String userID) {
         ApiParam apiParam = new ApiParam();
         apiParam.setParam1(userID);

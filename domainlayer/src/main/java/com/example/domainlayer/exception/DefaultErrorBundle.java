@@ -1,5 +1,9 @@
 package com.example.domainlayer.exception;
 
+
+/**
+ * Manager for default errors
+ */
 public class DefaultErrorBundle implements ErrorBundle {
 
     private static final String DEFAULT_ERROR_MSG = "Unknown error";

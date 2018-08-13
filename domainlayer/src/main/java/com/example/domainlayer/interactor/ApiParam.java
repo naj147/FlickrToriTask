@@ -1,8 +1,10 @@
 package com.example.domainlayer.interactor;
 
+/**
+ * Class Used to represent API parameters (method, tags, titles, page number and UserID)
+ */
 public class ApiParam {
 
-    //int method,String param1, String param2
     int method;
     String param1;
     int param2;

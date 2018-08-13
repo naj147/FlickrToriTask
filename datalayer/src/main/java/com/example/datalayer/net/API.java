@@ -7,6 +7,10 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+
+/**
+ * RestApi Interface for retrieving data from the network.
+ */
 public interface API {
 
 
@@ -20,23 +24,24 @@ public interface API {
     int njcb = 1;
     String format = "json";
 
-    //GET RECENT SERVICE
+    /**
+     * A method to retrieve Recent Images as {@link Observable<PhotosEntity>} of {@link PhotosEntity} from Flickr API
+     */
 
     @GET("/services/rest/")
     Observable<PhotosEntity> listImages(@Query(("method")) String method, @Query(("api_key")) String api_key, @Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
 
-   //TODO : Add the search Service
-
+    /**
+     * A method to retrieve Searched Images as {@link Observable} of {@link PhotosEntity} from Flickr API
+     */
 
     @GET("/services/rest/")
     Observable<PhotosEntity> searchForImages(@Query(("method")) String method, @Query(("api_key")) String api_key, @Query("tags") String tags, @Query("text") String text, @Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
 
+    /**
+     * A method to retrieve a user's profile as {@link Observable} of {@link UserEntity}  from Flickr API
+     */
     @GET("/services/rest/")
     Observable<UserEntity> getUser(@Query(("method")) String method, @Query(("api_key")) String api_key, @Query("user_id") String userID, @Query("page") int page, @Query(("format")) String format, @Query("nojsoncallback") int njcb);
-    /*
-    * public interface RecipeService {
-    @GET("{recipeId}")
-        //=cuisine^cuisine-NAME OF THE CUISINE
-    Call<RecipeAfterLoad> listRecipes(@Path("recipeId") String recipeId,@Query("_app_id") String app_id, @Query("_app_key") String app_key);
-}*/
+
 }

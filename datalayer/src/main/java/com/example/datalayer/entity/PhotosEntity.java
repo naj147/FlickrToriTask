@@ -1,18 +1,17 @@
 package com.example.datalayer.entity;
 
 import com.example.datalayer.net.Exclude;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
+/**
+ * PhotosEntity used in the data layer.
+ * (PhotosEntity is different from PhotoEntity as one engulfs the other)
+ */
 public class PhotosEntity extends RealmObject {
     @Exclude
     @PrimaryKey

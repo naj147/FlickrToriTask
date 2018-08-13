@@ -4,6 +4,7 @@
     <string name="search_hint">What are you looking for?</string>
     <string name="recent_pictures">Recent Pictures</string>
     <string name="search_result">Search Result</string>
+    <string name="retry">retry</string>
 
     <style name="AppTheme.ProgressBar">
         <item name="android:layout_width">wrap_content</item>

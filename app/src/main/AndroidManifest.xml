@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activities.MainActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
@@ -27,11 +27,11 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".view.PhotoDetailsActivity"
+            android:name=".view.activities.PhotoDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.SplashScreen"
+            android:name=".view.activities.SplashScreen"
             android:theme="@style/SplashScreenTheme"
 
             >

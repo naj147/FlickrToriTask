@@ -2,6 +2,10 @@ package com.example.naj_t.flickrtoritask.models;
 
 import java.util.List;
 
+/**
+ * Class that represents a PhotoWrapper in the presentation layer.
+ */
+
 public class PhotosModel {
 
     private int page;

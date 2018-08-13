@@ -1,33 +1,31 @@
-package com.example.naj_t.flickrtoritask.adapter;
+package com.example.naj_t.flickrtoritask.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.naj_t.flickrtoritask.R;
 import com.example.naj_t.flickrtoritask.models.PhotoModel;
-import com.example.naj_t.flickrtoritask.view.MainActivity;
-import com.squareup.haha.perflib.Main;
+import com.example.naj_t.flickrtoritask.view.activities.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Handler;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
-
+/**
+ * Adaptar that manages a collection of {@link PhotoModel}.
+ */
 public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>{
 
     @Inject
@@ -55,9 +53,8 @@ public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PhotosViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final PhotosViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         PhotoModel photoModel = this.photosCollection.get(position);
-//        holder.textViewTitle.setText(photoModel.getParam1());
         String url = "https://farm"+photoModel.getFarm()+".staticflickr.com/"+photoModel.getServer()+"/"+photoModel.getId()+"_"+photoModel.getSecret()+".jpg";
         picasso.load(url).into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
@@ -66,10 +63,7 @@ public class PhotosAdapter  extends RecyclerView.Adapter<PhotosAdapter.PhotosVie
                 ((MainActivity) context).setPhotoClicked(photosCollection.get(position));
             }
         });
-//        holder.textViewId.setText(photoModel.getId());
-//        holder.textViewServer.setText(photoModel.getServer());
-//        holder.textViewOwner.setText(photoModel.getOwner());
-        //TODO: OnCLickLIstener on images etc;
+
     }
 
 

@@ -14,29 +14,35 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
-import timber.log.Timber;
 
+/**
+ * {@link PhotosRepository} for retrieving user and photos data.
+ */
 @Singleton
 public class PhotosDataRepository implements PhotosRepository {
 private final PhotosDataStoreFactory photosDataStoreFactory;
 private  final PhotosMapper photosMapper;
 private final UserMapper userMapper;
-//Todo : injection here eventually
 
+    /**
+     * Constructs a {@link PhotosRepository}.
+     *
+     * @param photosDataStoreFactory factory to construct different data source implementations.
+     * @param photosMapper           {@link PhotosMapper}.
+     * @param userMapper             {@link UserMapper}.
+     */
 @Inject
-    public PhotosDataRepository(PhotosDataStoreFactory photosDataStoreFactory, PhotosMapper photosMapper, UserMapper userMapper) {
-        this.photosDataStoreFactory = photosDataStoreFactory;
-        this.photosMapper = photosMapper;
-        this.userMapper=userMapper;
-    }
+public PhotosDataRepository(PhotosDataStoreFactory photosDataStoreFactory, PhotosMapper photosMapper, UserMapper userMapper) {
+    this.photosDataStoreFactory = photosDataStoreFactory;
+    this.photosMapper = photosMapper;
+    this.userMapper = userMapper;
+}
 
     @Override
-    public Observable<Photos> photos(int method,String title, int page) {
+    public Observable<Photos> photos(int method, String title, int page) {
         return photosDataStoreFactory.create().photos( method,title,page).map(new Function<PhotosEntity, Photos>() {
             @Override
-            public Photos apply(PhotosEntity photosEntity) throws Exception {
-//                Timber.tag("HEY").d("I was in PhotosDataRepo");
-//                Timber.tag("HEY").d("Fatzo "+ photosEntity.toString());
+            public Photos apply(PhotosEntity photosEntity) {
                 return photosMapper.transform(photosEntity);
             }
         });
@@ -46,7 +52,7 @@ private final UserMapper userMapper;
     public Observable<User> userDetails(int method, String userId) {
         return photosDataStoreFactory.create().userDetails(method,userId).map(new Function<UserEntity, User>() {
             @Override
-            public User apply(UserEntity userEntity) throws Exception {
+            public User apply(UserEntity userEntity) {
                 return userMapper.transform(userEntity);
             }
         });

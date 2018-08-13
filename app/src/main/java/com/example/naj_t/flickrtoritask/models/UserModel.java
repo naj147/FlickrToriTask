@@ -1,5 +1,8 @@
 package com.example.naj_t.flickrtoritask.models;
 
+/**
+ * Class that represents a User in the presentation layer.
+ */
 public class UserModel {
     private String username;
     private String id;

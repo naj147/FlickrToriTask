@@ -6,8 +6,8 @@ import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.naj_t.flickrtoritask.view.MainActivity;
-import com.example.naj_t.flickrtoritask.view.PhotoDetailsActivity;
+import com.example.naj_t.flickrtoritask.view.activities.MainActivity;
+import com.example.naj_t.flickrtoritask.view.activities.PhotoDetailsActivity;
 
 import org.junit.Before;
 import org.junit.Rule;

@@ -10,17 +10,23 @@ import io.reactivex.Observable;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
+/**
+ * {@link Http3Cache} Class implementation for the second Cache (Local Data Store)
+ */
 @Singleton
 public class PhotosCacheImpl implements PhotosCache {
     @Inject
     public PhotosCacheImpl() {
     }
+
+    /**
+     * The time it takes for the Local Data to be considered expired
+     */
     private static final long EXP_TIME =  10 * 1000; //1m
 
-//    private String modifyDateLayout(String inputDate) throws ParseException{
-//        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z",Locale.ENGLISH).parse(inputDate);
-//        return  new SimpleDateFormat("dd.MM.yyyy HH:mm:ss",Locale.ENGLISH).format(date);
-//    }
+    /**
+     * A method that verifies that the local data is expired and frees the space in that case
+     */
     @Override
     public boolean isExpired() {
         Realm realm = Realm.getDefaultInstance();
@@ -39,8 +45,7 @@ public class PhotosCacheImpl implements PhotosCache {
                         realm.commitTransaction();
                     }
                     return isExpired;
-                }else
-                {
+                } else {
                     realm.beginTransaction();
                     realm.delete(PhotosEntity.class);
                     realm.commitTransaction();
@@ -56,27 +61,50 @@ public class PhotosCacheImpl implements PhotosCache {
         return false;
     }
 
+    /**
+     * A method to verify that a {@link UserEntity} is cached
+     */
     @Override
     public boolean isCached(UserEntity userEntity) {
         return getUserEntity(userEntity) != null;
     }
 
+    /**
+     * A method to verify that a {@link PhotosEntity} is cached
+     */
     @Override
     public boolean isCached() {
         return getPhotosEntity() != null;
     }
 
+    /**
+     * A method to retrieve a {@link PhotosEntity} as an observable
+     *
+     * @return {@link Observable<PhotosEntity>}
+     */
     @Override
     public Observable<PhotosEntity> get() {
         PhotosEntity photosEntity = getPhotosEntity();
         return Observable.just(photosEntity);
     }
 
+    /**
+     * A method to retrieve a {@link UserEntity} as an observable using a UserID
+     *
+     * @param userID Unique string used to retrieve the User
+     * @return {@link Observable<UserEntity>}
+     */
     @Override
     public Observable<UserEntity> getUser(String userID) {
         UserEntity userEntity =  getUserEntity(new UserEntity(userID));
         return  Observable.just(userEntity);
     }
+
+    /**
+     * A method to register a {@link UserEntity} in the local Data Store (the Real.io Database)
+     *
+     * @param userEntity UserEntity to be stored
+     */
 
     @Override
     public void put(UserEntity userEntity) {
@@ -87,6 +115,11 @@ public class PhotosCacheImpl implements PhotosCache {
         realm.close();
     }
 
+    /**
+     * A method to register a {@link PhotosEntity} in the local Data Store (the Real.io Database)
+     *
+     * @param photosEntity PhotosEntity to be stored
+     */
     @Override
     public void put(PhotosEntity photosEntity) {
         Realm realm = Realm.getDefaultInstance();
@@ -94,29 +127,13 @@ public class PhotosCacheImpl implements PhotosCache {
         realm.copyToRealmOrUpdate(photosEntity);
         realm.commitTransaction();
         realm.close();
-    }/*
-try {
-     instance = Realm.getDefaultInstance();
-     realm.beginTransaction();
-     MeasureObject first = instance.where(MeasureObject.class).equalTo("id", "xxxx").findFirst();
-     if(first == null) {
-         realm.cancelTransaction();
-         return;
-     }
-     ....
-     realm.commitTransaction();
-     ....
-} catch(Throwable e) {
-    if(instance != null && instance.isInTransaction()) {
-         instance.cancelTransaction();
     }
-    throw e;
-} finally {
-    if(instance != null) {
-         instance.close();
-    }
-    */
 
+    /**
+     * A method to retrieve a {@link PhotosEntity}
+     *
+     * @return {@link PhotosEntity} to be retrieved from the local DB
+     */
     private PhotosEntity getPhotosEntity() {
         PhotosEntity photosEntity = null;
         Realm realm = null;
@@ -143,6 +160,11 @@ try {
         return photosEntity;
     }
 
+    /**
+     * A method to retrieve a {@link UserEntity}
+     * @param givenUserEntity userEntity with UsedID to be retrieved
+     *@return {@link UserEntity} From Local DB
+     * */
     private UserEntity getUserEntity(UserEntity givenUserEntity) {
         UserEntity userEntity = new UserEntity();
         Realm realm = null;

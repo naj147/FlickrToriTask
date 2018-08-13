@@ -1,5 +1,8 @@
 package com.example.domainlayer.model;
 
+/**
+ * Class that represents a Photo in the domain layer.
+ */
 public class Photo {
 
     private String id;

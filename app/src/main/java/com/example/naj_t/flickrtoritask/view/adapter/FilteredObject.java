@@ -1,10 +1,13 @@
-package com.example.naj_t.flickrtoritask.adapter;
+package com.example.naj_t.flickrtoritask.view.adapter;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An object representing the json objects retrieved from the JsonFile in the raw folder
+ */
 public class FilteredObject {
     @SerializedName("category1")
     private String category1;
@@ -19,6 +22,13 @@ public class FilteredObject {
     public FilteredObject() {
     }
 
+    /**
+     * A method that verifies if a {@link FilteredObject}
+     * contains a text
+     *
+     * @param text a String representing the searched for text
+     * @return a list of {@link Category2} that contain the text
+     */
     public List<Category2> hasCat(String text) {
         List<Category2> category2List = new ArrayList<>();
         if (category1.toLowerCase().contains(text)) {
@@ -79,6 +89,13 @@ public class FilteredObject {
             this.labels = label;
         }
 
+        /**
+         * A method that verifies if a {@link Category2}
+         * contains a text
+         *
+         * @param text a String representing the searched for text
+         * @return a list of {@link String} labels that contain the text
+         */
         public List<String> hasCat(String text) {
             List<String> stringList = new ArrayList<>();
             if (category2.toLowerCase().contains(text)) {

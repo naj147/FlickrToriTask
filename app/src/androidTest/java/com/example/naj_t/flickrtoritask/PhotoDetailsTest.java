@@ -1,6 +1,6 @@
 package com.example.naj_t.flickrtoritask;
 
-import com.example.naj_t.flickrtoritask.view.PhotoDetailsActivity;
+import com.example.naj_t.flickrtoritask.view.activities.PhotoDetailsActivity;
 
 import org.junit.Before;
 import org.junit.Rule;

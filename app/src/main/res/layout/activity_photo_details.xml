@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    tools:context=".view.PhotoDetailsActivity">
+    tools:context=".view.activities.PhotoDetailsActivity">
 <RelativeLayout
     android:id="@+id/header"
     android:padding="6dp"
@@ -27,9 +27,11 @@
         android:layout_toRightOf="@id/userImage"
         android:id="@+id/username"
         android:textStyle="bold"
-        android:textSize="16dp"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/userImage"
+        android:textSize="16sp" />
 
     <ImageView
         android:layout_centerVertical="true"
@@ -39,7 +41,8 @@
         android:backgroundTint="@android:color/white"
         android:layout_height="38dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
 </RelativeLayout>
     <View
         android:layout_marginTop="2dp"
@@ -58,9 +61,11 @@
     android:textStyle="bold"
 
     android:textColor="@android:color/white"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:layout_marginStart="4dp" />
 
     <ProgressBar
+        android:visibility="gone"
         android:id="@+id/load_prog"
         style="@style/AppTheme.ProgressBar"
         android:layout_width="wrap_content"
@@ -70,10 +75,11 @@
         android:layout_centerVertical="true" />
 
     <Button
+        android:text="@string/retry"
         android:id="@+id/bt_retry"
         style="@style/AppTheme.Button"
         android:layout_gravity="center"
-        android:text="retry" />
+        android:visibility="gone" />
 <ImageView
     android:layout_below="@id/header"
     android:layout_above="@id/horizontal_divider"
@@ -82,5 +88,6 @@
     android:id="@+id/imageSelected"
     android:scaleType="fitCenter"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:contentDescription="TODO" />
 </RelativeLayout>

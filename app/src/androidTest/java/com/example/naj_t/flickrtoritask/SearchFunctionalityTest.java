@@ -9,7 +9,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 
-import com.example.naj_t.flickrtoritask.view.MainActivity;
+import com.example.naj_t.flickrtoritask.view.activities.MainActivity;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;

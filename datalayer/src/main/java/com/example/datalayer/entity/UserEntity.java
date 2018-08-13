@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
+/**
+ * UserEntity used in the data layer.
+ */
 public class UserEntity extends RealmObject {
     public UserEntity() {
     }
@@ -66,12 +69,12 @@ public class UserEntity extends RealmObject {
     Username username;
     @PrimaryKey
     @SerializedName("id")
-        String id;
+    String id;
     @SerializedName("nsid")
-        String nsid;
+    String nsid;
     @SerializedName("iconserver")
-        int iconserver;
+    int iconserver;
     @SerializedName("iconfarm")
-        int iconfarm;
+    int iconfarm;
 
 }

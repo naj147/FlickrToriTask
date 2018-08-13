@@ -6,11 +6,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.annotations.NonNull;
 
+/**
+ * Decorated {@link java.util.concurrent.ThreadPoolExecutor}
+ */
 @Singleton
 public class JobExecutor implements ThreadExecutor {
     private final ThreadPoolExecutor threadPoolExecutor;

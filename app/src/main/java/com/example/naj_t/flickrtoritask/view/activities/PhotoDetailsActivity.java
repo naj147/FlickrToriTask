@@ -1,4 +1,4 @@
-package com.example.naj_t.flickrtoritask.view;
+package com.example.naj_t.flickrtoritask.view.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.example.naj_t.flickrtoritask.R;
 import com.example.naj_t.flickrtoritask.models.PhotoModel;
 import com.example.naj_t.flickrtoritask.models.UserModel;
 import com.example.naj_t.flickrtoritask.presenters.PhotoDetailPresenter;
+import com.example.naj_t.flickrtoritask.view.PhotosDetailsView;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -24,7 +25,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDetailsView{
+/**
+ * Activity that shows an individual photo in focus with details about it :
+ * Title, full scale photo
+ * Owner' username and their profile picture
+ */
+public class PhotoDetailsActivity extends AppCompatActivity implements PhotosDetailsView {
     public static final String PHOTO_ID = MainActivity.PHOTO_ID;
     public static final String PHOTO_OWNER = MainActivity.PHOTO_OWNER;
     public static final String PHOTO_FARM = MainActivity.PHOTO_FARM;
@@ -64,6 +70,9 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
         return ((AndroidApplication) getApplication()).getApplicationComponent();
     }
 
+    /**
+     * A method that initialises injectors and the activity views.
+     */
     public void initialize(final PhotoDetailsActivity context){
         ButterKnife.bind(context);
         this.getApplicationComponent().inject(context);
@@ -78,13 +87,25 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
         Intent i =context.getIntent();
         photoModel = getPhotoModelFromIntent(i);
         renderPhoto(photoModel);
-//        Timber.tag("fatzo").d("PhotoModel%s", photoModel.getId());
 
     }
+
+    /**
+     * Verifies if Intent is received correcly
+     *
+     * @param i Intent that encapsulates the data received from {@link MainActivity}
+     * @return {@link Boolean} representing if the intents contains the proper Extras
+     */
     private  Boolean intentIsFull(Intent i){
         return  i.hasExtra(PHOTO_ID)&&i.hasExtra(PHOTO_OWNER)&&i.hasExtra(PHOTO_FARM)&&i.hasExtra(PHOTO_SERVER)&&i.hasExtra(PHOTO_SECRET)&& i.hasExtra(PHOTO_TITLE);
     }
 
+    /**
+     * retrieves a {@link PhotoModel} from an {@link Intent}
+     *
+     * @param i Intent that encapsulates the data received from {@link MainActivity}
+     * @return {@link PhotoModel} the Photo selected by the user.
+     */
     private PhotoModel getPhotoModelFromIntent(Intent i){
         PhotoModel photoModel = null;
         if(intentIsFull(i)){
@@ -100,10 +121,13 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
         return  photoModel;
     }
 
+    /***
+     * A method that renders the {@link PhotoModel} selected by the user
+     * @param photoModel a {@link PhotoModel} to be rendered
+     * */
     public  void renderPhoto(PhotoModel photoModel){
         if(photoModel!=null){
             title.setText(photoModel.getTitle());
-//            renderPhoto(photoModel.getUser());
             String url = "https://farm"+photoModel.getFarm()+".staticflickr.com/"+photoModel.getServer()+"/"+photoModel.getId()+"_"+photoModel.getSecret()+".jpg";
             picasso.load(url).into(imageView);
             photoDetailPresenter.loadPhotoDetails(photoModel.getOwner());
@@ -111,6 +135,10 @@ public class PhotoDetailsActivity extends AppCompatActivity  implements PhotosDe
 
     }
 
+    /***
+     * A method that renders the {@link UserModel} owning the Photo selected by the user
+     * @param userModel a {@link UserModel} to be rendered
+     * */
     @Override
     public void renderPhoto(UserModel userModel) {
         if(userModel!=null){

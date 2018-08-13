@@ -1,9 +1,10 @@
-package com.example.naj_t.flickrtoritask.adapter;
+package com.example.naj_t.flickrtoritask.view.adapter;
 
-import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+/**
+ * Layout manager to position items inside a {@link android.support.v7.widget.RecyclerView}.
+ */
 public class PhotosLayoutManager extends StaggeredGridLayoutManager {
 
     public PhotosLayoutManager(int columnCount) {

@@ -8,10 +8,20 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+/**
+ * Mapper class used to transform {@link Photo} (in the domain layer) to {@link PhotoModel} in the
+ * presentation layer.
+ */
 public class PhotoModelMapper {
     @Inject
     public PhotoModelMapper() { }
 
+    /**
+     * Transform a {@link Photo} into an {@link PhotoModel}.
+     *
+     * @param photoEntity Object to be transformed.
+     * @return {@link PhotoModel}.
+     */
     public PhotoModel transform(Photo photoEntity){
         PhotoModel photo = null;
 
@@ -21,6 +31,13 @@ public class PhotoModelMapper {
         }
         return  photo;
     }
+
+    /**
+     * Transform a Collection of {@link PhotoModel} into a Collection of {@link PhotoModel}.
+     *
+     * @param photoEntities Objects to be transformed.
+     * @return List of {@link PhotoModel}.
+     */
     public List<PhotoModel> transformList(List<Photo> photoEntities){
         List<PhotoModel> photoList = new ArrayList<>();
         for(Photo photoEntity : photoEntities){

@@ -1,9 +1,12 @@
-package com.example.naj_t.flickrtoritask.adapter;
+package com.example.naj_t.flickrtoritask.view.adapter;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * A wrapper for {@link FilteredObject}
+ */
 public class FilteredObjects {
     @SerializedName("FilteredObject")
     List<FilteredObject> filteredObject;

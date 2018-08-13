@@ -1,5 +1,9 @@
 package com.example.domainlayer.model;
 
+
+/**
+ * Class that represents a User in the domain layer.
+ */
 public class User {
 
     private String username;
@@ -18,6 +22,7 @@ public class User {
 
     public User() {
     }
+
     public User(String userId) {
         this.id=userId;
     }

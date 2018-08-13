@@ -1,5 +1,9 @@
 package com.example.naj_t.flickrtoritask.models;
 
+/**
+ * Class that represents a Photo in the presentation layer.
+ */
+
 public class PhotoModel {
 
     private String id;

@@ -1,11 +1,8 @@
 package com.example.naj_t.flickrtoritask;
 
-import android.app.IntentService;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v7.app.AppCompatActivity;
-
-import com.example.naj_t.flickrtoritask.view.MainActivity;
 
 public class MyCustomRule<A extends AppCompatActivity> extends ActivityTestRule<A> {
     public MyCustomRule(Class<A> activityClass) {

@@ -1,8 +1,11 @@
 package com.example.domainlayer.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Class that represents a Photos in the domain layer.
+ */
 public class Photos {
     private int page;
     private int pages;

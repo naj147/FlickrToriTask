@@ -1,4 +1,4 @@
-package com.example.naj_t.flickrtoritask.view;
+package com.example.naj_t.flickrtoritask.view.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,13 +16,14 @@ import android.widget.TextView;
 import com.example.naj_t.flickrtoritask.AndroidApplication;
 import com.example.naj_t.flickrtoritask.DPINJ.components.ApplicationComponent;
 import com.example.naj_t.flickrtoritask.R;
-import com.example.naj_t.flickrtoritask.adapter.FilteredObjects;
-import com.example.naj_t.flickrtoritask.adapter.PhotosAdapter;
-import com.example.naj_t.flickrtoritask.adapter.PhotosLayoutManager;
-import com.example.naj_t.flickrtoritask.adapter.SearchableAdapter;
 import com.example.naj_t.flickrtoritask.models.PhotoModel;
 import com.example.naj_t.flickrtoritask.models.PhotosModel;
 import com.example.naj_t.flickrtoritask.presenters.PhotosPresenter;
+import com.example.naj_t.flickrtoritask.view.PhotosListView;
+import com.example.naj_t.flickrtoritask.view.adapter.FilteredObjects;
+import com.example.naj_t.flickrtoritask.view.adapter.PhotosAdapter;
+import com.example.naj_t.flickrtoritask.view.adapter.PhotosLayoutManager;
+import com.example.naj_t.flickrtoritask.view.adapter.SearchableAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -36,9 +37,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 
-public class MainActivity extends AppCompatActivity  implements PhotosListView{
+/**
+ * Main application screen.
+ * It shows both Recent Pictures And Search Results
+ */
+public class MainActivity extends AppCompatActivity implements PhotosListView {
     public static final String PHOTO_ID = "ID";
     public static final String PHOTO_OWNER = "OWNER";
     public static final String PHOTO_FARM = "FARM";
@@ -67,12 +71,7 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
     SearchableAdapter searchableAdapter;
     PhotosLayoutManager photosLayoutManager;
     static int page=1;
-    //    @BindView(R.id.page)
-//    TextView textViewPage;
-//    @BindView(R.id.pages)
-//    TextView textViewPages;
-//    @BindView(R.id.total)
-//    TextView textViewTotal;
+
     @BindView(R.id.content_title)
     TextView contentTitleText;
 
@@ -82,28 +81,28 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         setContentView(R.layout.activity_main);
         this.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
-        initializingRealm(this);
         this.photosPresenter.setView(this);
         if (!initializeIntent() && savedInstanceState == null) {
             this.loadPhotos(null, page);
         }
         setupSearchView(this);
         setupRecyclerView();
-
-
     }
 
 
-    //    @OnClick(R.id.search_tab)
-//    public void searchViewClicked(){
-//        searchView.onActionViewExpanded();
-//
-//    }
+    /***
+     * A Method to Expand the search tab when clicked
+     */
     @OnClick(R.id.search_tab)
     public void searchTabClicked() {
         searchView.onActionViewExpanded();
     }
 
+    /**
+     * A Method to Setup the searchView and handle Query submits and Autocomplete
+     *
+     * @param context {@link Context} context
+     */
     @SuppressLint("RestrictedApi")
     public void setupSearchView(final Context context) {
         ((EditText) this.searchView.findViewById(R.id.search_src_text)).setTextColor(getResources().getColor(R.color.black));
@@ -154,11 +153,20 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
 
     }
 
+    /**
+     * A Method for Retrieving and parsing the categories from the json file attached in the raw folder
+     */
     public FilteredObjects getCatFromJson() {
         InputStream in = getResources().openRawResource(R.raw.flickr_keyword_struct);
         JsonElement element = new JsonParser().parse(new InputStreamReader(in));
         return new Gson().fromJson(element.getAsJsonObject().toString(), FilteredObjects.class);
     }
+
+    /**
+     * A Method for Initializing Intents for this activity
+     *
+     * @return {@link Boolean} the intent received is a search action
+     */
     public boolean initializeIntent() {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -170,25 +178,24 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         return false;
     }
 
+    /**
+     * A Method to execute search query
+     *
+     * @param query {@link String}  represents the query typed by the user in the search bar
+     */
     private void doMySearch(String query) {
+        searchView.onActionViewCollapsed();
         searchView.clearFocus();
         queryText = query;
         loadPhotos(query, 1);
     }
 
-    public void initializingRealm(Context context){
-        Realm.init(context);
-        //THIS CREATES A MEMORY LEAK AND WAS USED ONLY FOR DEV PURPOSES
-
-        //if(BuildConfig.DEBUG){
-//        Stetho.initialize(
-//                Stetho.newInitializerBuilder(context)
-//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(context))
-//                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))
-//                        .build());
-        //}
-    }
-
+    /**
+     * A Method to call Load the photo list on the current view
+     * @param text {@link String} title or tag for a photo
+     * @param page {@link int} the page number to be retrieved
+     *
+     * */
     private void loadPhotos(String text, int page) {
         this.photosPresenter.loadPhotos(text, page);
     }
@@ -214,12 +221,16 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         this.photosPresenter.resume();
     }
 
-
+    /**
+     * A Method to setup the Recycleview with {@link PhotosAdapter} and {@link PhotosLayoutManager}
+     *
+     * */
 
     private void setupRecyclerView() {
         photosLayoutManager =  new PhotosLayoutManager(2);
-//        photosLayoutManager.setAutoMeasureEnabled(true);
+
         this.recyclerView.setLayoutManager(photosLayoutManager);
+        //        photosLayoutManager.setAutoMeasureEnabled(true);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
 //                @SuppressLint("RestrictedApi")
@@ -315,6 +326,11 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
 
     }
 
+    /**
+     * A Method to create an intent with extras filled with the photo informations
+     * that gets sent to the {@link PhotoDetailsActivity}
+     *@param photoClicked The photo that was clicked by the user
+     * */
     public  void setPhotoClicked(PhotoModel photoClicked){
         Intent intent = new Intent(this, PhotoDetailsActivity.class);
         intent.putExtra(PHOTO_ID, photoClicked.getId());
@@ -325,19 +341,14 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         intent.putExtra(PHOTO_TITLE,photoClicked.getTitle());
         startActivity(intent);
     }
-    private class ScrollListener extends RecyclerView.OnScrollListener {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            PhotosLayoutManager photosLayoutManager=(PhotosLayoutManager)recyclerView.getLayoutManager();
-            photosLayoutManager.invalidateSpanAssignments();
-            int visibleItemCount = photosLayoutManager.getChildCount();
-            int totalItemCount=photosLayoutManager.getItemCount();
-            int firstVisibleItemPosition = photosLayoutManager.findFirstVisibleItemPositions(null)[0];
-            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                    && firstVisibleItemPosition >= 0&& totalItemCount >= PAGE_SIZE){
-//                loadPhotos(++page); TODO: Request a behavior subject on the GetPhoto!
-            }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isFocused()) {
+            searchView.onActionViewCollapsed();
+            searchView.clearFocus();
         }
+        super.onBackPressed();
     }
 
     @Override
@@ -345,18 +356,28 @@ public class MainActivity extends AppCompatActivity  implements PhotosListView{
         return this.getApplicationContext();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (searchView.isFocused()) {
-            searchView.clearFocus();
+    /**
+     * A scroll listener to know when you reach the end of the recycleview and load a new list
+     * */
+    private class ScrollListener extends RecyclerView.OnScrollListener {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            PhotosLayoutManager photosLayoutManager=(PhotosLayoutManager)recyclerView.getLayoutManager();
+            int visibleItemCount = photosLayoutManager.getChildCount();
+            int totalItemCount=photosLayoutManager.getItemCount();
+            int firstVisibleItemPosition = photosLayoutManager.findFirstVisibleItemPositions(null)[0];
+            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                    && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
+                photosLayoutManager.invalidateSpanAssignments();
+//                loadPhotos(++page); TODO: Request a behavior subject on the GetPhoto!
+            }
         }
-        super.onBackPressed();
     }
 
-    private RecyclerViewReadyCallback recyclerViewReadyCallback;
-
-    public interface RecyclerViewReadyCallback {
-        void onLayoutReady();
-    }
+//    private RecyclerViewReadyCallback recyclerViewReadyCallback;
+//
+//    public interface RecyclerViewReadyCallback {
+//        void onLayoutReady();
+//    }
 
 }
