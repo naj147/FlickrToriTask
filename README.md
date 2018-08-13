@@ -63,7 +63,7 @@ To achieve this, my proposal is about breaking up the project into 3 different l
 ####Video Demo  
 
 
-	This video showcases all the fonctionalities of the app 
+	This video showcases all the fonctionalities of the app  (Click the Play the demo link below the Image)
 
 !["Play"](https://i.ytimg.com/vi/CVXp3ZgUIr8/maxresdefault.jpg) 
 
