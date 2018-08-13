@@ -1,4 +1,4 @@
-##FlickrToriTask
+FlickrToriTask
 ----------
 
 ** greetings, ** 
