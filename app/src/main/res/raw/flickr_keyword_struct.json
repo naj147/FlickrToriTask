@@ -1,0 +1,96 @@
+{
+  "FilteredObject": [
+    {
+      "category1": "Animals",
+      "cat2": [
+        {
+          "category2": "Pets",
+          "labels": [
+            "Guppy",
+            "Parrot",
+            "GoldFish",
+            "Dog",
+            "Cat"
+          ]
+        },
+        {
+          "category2": "Wild animals",
+          "labels": [
+            "Tiger",
+            "Ant",
+            "Tetra",
+            "Peafowl",
+            "Mongoose"
+          ]
+        },
+        {
+          "category2": "Domestic animals",
+          "labels": [
+            "Cow",
+            "Pig",
+            "Goat",
+            "Horse"
+          ]
+        }
+      ]
+    },
+    {
+      "category1": "Food",
+      "cat2": [
+        {
+          "category2": "Fast food",
+          "labels": [
+            "Cheeseburger",
+            "Hamburger"
+          ]
+        },
+        {
+          "category2": "Dessert",
+          "labels": [
+            "Chocolate",
+            "Cookie",
+            "Cake",
+            "Pie"
+          ]
+        }
+      ]
+    },
+    {
+      "category1": "Vechicle",
+      "cat2": [
+        {
+          "category2": "Motorcycle",
+          "labels": [
+            "Harley Davidson"
+          ]
+        },
+        {
+          "category2": "Car",
+          "labels": [
+            "Lamborghini",
+            "Ferrari",
+            "Bugatti",
+            "BMW",
+            "Mercedes"
+          ]
+        }
+      ]
+    },
+    {
+      "category1": "Movie",
+      "cat2": [
+        {
+          "category2": "Science fiction",
+          "labels": [
+            "Sunshine",
+            "Interstellar",
+            "The Moon",
+            "Oblivion",
+            "Star Trek",
+            "Star Wars"
+          ]
+        }
+      ]
+    }
+  ]
+}
